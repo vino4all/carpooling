@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:scrollbars="none">
+
+<LinearLayout  android:background="@drawable/yellow_bg"  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+  <LinearLayout android:background="@drawable/yellow_bg" android:gravity="center" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+   <ImageView android:id="@+id/icone" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:src="@drawable/auto_icone"/>
+     <TextView android:textColor="@drawable/red_bg_text"  android:textAlign="center" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/app_title" />
+    <ImageView android:id="@+id/pingoins" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:src="@drawable/pingoins"/>
+  </LinearLayout>
+  
+    <LinearLayout android:background="@drawable/red_bg" android:gravity="center_horizontal" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+    	<Button android:id="@+id/appButtonMap"   android:text="@string/buttonMap"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+    	<Button android:id="@+id/appButtonMessages"   android:text="@string/buttonMessages"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+   	    <Button android:id="@+id/appButtonAbout"   android:text="@string/buttonAbout"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+	</LinearLayout>
+	
+	<RadioGroup android:id="@+id/menu_hidden" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+    	<RadioButton android:textColor="@drawable/red_bg_text"  android:text="@string/radio_group_2_hidden" android:id="@+id/radio_group_2_hidden" />
+    	<RadioButton android:textColor="@drawable/red_bg_text"  android:text="@string/radio_group_2_hidden_false" android:id="@+id/radio_group_2_hidden_false" />
+    </RadioGroup>
+	
+   <LinearLayout android:background="@drawable/yellow_bg"  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+ 
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+ 		<TextView android:textColor="@drawable/red_bg_text"  android:layout_width="100px" android:layout_height="wrap_content" android:text="@string/app_my_name" />
+ 		<EditText android:id="@+id/app_myName"    android:layout_width="fill_parent"  android:layout_height="wrap_content"    android:text=""  android:lines="1" />
+ 	</LinearLayout>
+ 	
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+ 		<TextView android:textColor="@drawable/red_bg_text"  android:layout_width="100px" android:layout_height="wrap_content" android:text="@string/app_destination" />
+ 		<EditText android:id="@+id/app_destination"    android:layout_width="fill_parent"  android:layout_height="wrap_content"    android:text=""  android:lines="1" />
+ 	</LinearLayout>
+ 	
+ 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+ 		<TextView  android:textColor="@drawable/red_bg_text"  android:layout_width="100px" android:layout_height="wrap_content" android:text="@string/app_prix" />
+ 		<EditText android:id="@+id/app_prix"    android:layout_width="fill_parent"  android:layout_height="wrap_content"    android:text="$"  android:lines="1" />
+ 	</LinearLayout>
+ 	
+    </LinearLayout>
+ 
+    <RadioGroup android:id="@+id/menu_preferences" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+    	<RadioButton android:textColor="@drawable/red_bg_text" android:text="@string/radio_group_1_vehicule" android:id="@+id/radio_I_am_vehicule" />
+    	<RadioButton android:textColor="@drawable/red_bg_text" android:text="@string/radio_group_1_passager" android:id="@+id/radio_I_am_passager" />
+        <!--   RadioButton android:text="@string/radio_group_1_I_Found" id="@+id/radio_I_found_what_i_want" / -->
+   </RadioGroup>
+   
+  
+  <LinearLayout android:background="@drawable/blue_bg" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+ 	    <TextView  android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/app_my_position" />
+ 
+		<RadioGroup android:id="@+id/menu_preferences_location" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
+	        <RadioButton android:text="@string/radio_preferences_location_gps" android:id="@+id/radio_preferences_location_gps" />
+	 	    <RadioButton android:text="@string/radio_preferences_location_map" android:id="@+id/radio_preferences_location_map" />
+	 	 </RadioGroup>
+		 <Button android:id="@+id/appButtonSetPositionGps"   android:text="@string/app_button_set_location_GPS"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+    	 <Button android:id="@+id/appButtonSetPositionManuel"   android:text="@string/app_button_set_location_Map"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+	
+ 	 </LinearLayout>
+ 	  
+     <LinearLayout android:background="@drawable/red_bg" android:gravity="center_horizontal" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+    	<Button android:id="@+id/appButtonMap2"   android:text="@string/buttonMap"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+    	<Button android:id="@+id/appButtonMessages2"   android:text="@string/buttonMessages"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+  	    <Button android:id="@+id/appButtonAbout2"   android:text="@string/buttonAbout"	android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
+	 </LinearLayout>
+    
+      
+</LinearLayout>
+</ScrollView>
