@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:scrollbars="vertical">
+
+<LinearLayout  android:background="@drawable/yellow_bg"  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+  <LinearLayout android:background="@drawable/yellow_bg" android:gravity="center" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+   <ImageView android:id="@+id/icone" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:src="@drawable/auto_icone"/>
+     <TextView android:textColor="@drawable/red_bg_text" android:textAlign="center" android:textStyle="bold" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/about_title" />
+    <ImageView android:id="@+id/pingoins" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:src="@drawable/pingoins"/>
+  </LinearLayout>
+  
+	 <TextView android:textColor="@drawable/red_bg_text" android:textAlign="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="v b0.0.0" />
+ 	 <TextView android:textColor="@drawable/red_bg_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/about_text_1" />
+ 	 
+ 	 <TextView android:textColor="@drawable/red_bg_text"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/about_text_2" />
+     <EditText android:id="@+id/aboutEditTextMessageToSend"    android:layout_width="fill_parent"  android:layout_height="wrap_content"    android:text="" android:lines="3" />
+
+ 	<Button android:id="@+id/aboutButtonSendXMPP"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="send" />
+    
+      <WebView android:id="@+id/aboutWebView"
+            android:layout_height="60.5px"
+            android:layout_width="fill_parent"
+        />
+        
+       
+            
+</LinearLayout>
+</ScrollView>

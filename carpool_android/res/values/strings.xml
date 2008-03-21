@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Carpool</string>
+    <string name="app_title">Carpool</string>
+    <string name="app_longitude">longitude</string>
+    <string name="app_latitude">latitude</string>
+    <string name="app_i_am">\nMy preferences :</string>
+    <string name="app_my_name">Nick Name:</string>
+    <string name="app_destination">Destination :</string>
+    <string name="app_prix">Price :</string>
+    <string name="app_my_position">My location:</string>
+    <string name="app_button_set_location_Map">set location by Map</string>
+    <string name="app_button_set_location_GPS">Refresh location by GPS</string>
+    <string name="appButtonSuspend">Suspend</string>
+    <string name="app_checkbox_set_location_GPS_refresh">update position by gps</string>
+    
+  
+   <string name="buttonMap">map</string>
+   <string name="buttonMessages">messages</string>
+   <string name="buttonAbout">about</string>
+   
+    <string name="activity_map">map</string>
+    <string name="ws_not_found"> Web Services not found </string>
+   <!-- string name="activity_ws">bg 2Web service </string -->
+   
+    <string name="radio_group_2_hidden">Hidden from network</string>
+    <string name="radio_group_2_hidden_false">Visible from network</string>
+  
+    <string name="radio_preferences_location_gps">location by gps</string>
+    <string name="radio_preferences_location_map">manuel location on the map</string>
+   
+   
+   
+   <string name="radio_group_1_vehicule">I have a car. I am looking for people</string>
+   <string name="radio_group_1_passager">I am walking. I am looking for a car</string>
+   <string name="radio_group_1_I_Found">I found a car or people. I don't search anything</string>
+   
+   <string name="detailButtonMap">map</string>
+   <string name="detailButtonNext">next</string>
+   <string name="detailButtonPrevious">previous</string>
+   <string name="detailButtonHide">hide</string>
+   <string name="detailButtonShowAll">showAll</string>
+   <string name="detail_hidden">showAll</string>   
+   <string name="activity_detail">Detail</string>
+   <string name="detail_tittle">Detail Selection</string>
+   <string name="detail_t_passager_cherche_vehicule">Pedestrian searching car </string>
+   <string name="detail_t_voiture_cherche_passager">Car searching people</string>
+   <string name="detail_t_unknow"> </string>
+   <string name="detail_t_strange"> </string>
+   <string name="detail_envoi_message">Send Message</string>
+   <string name="detail_labelHistoriqueMessages">Number of messages</string>
+   
+    <string name="detail_name">Name</string>
+    <string name="detail_prixLabel">Price</string>
+ 	<string name="xmpp_service_not_connected">XMPP service not connected.</string>
+    <string name="xmpp_session_not_found">The default XMPP session cannot be found.</string>
+    <string name="xmpp_found_stale_service">The XMPP service is stale. Rebinding...</string>
+   
+    <string name="activity_messages">Messages</string>
+  
+     <string name="activity_about">about </string>   
+     <string name="about_title">Carpool about</string>
+     <string name="about_text_1">developped by : Bertrand Guiral, \n mail: bertrand.guiral@gmail.com</string>
+     <string name="about_text_2">\nThank you for send me bugs, ideas, or encouragements</string>
+     <string name="about_myXmppAdress">bertrand.guiral@gmail.com</string>
+
+	<string name="map_message_connectingServer">Connecting Server</string>
+  	<string name="map_message_zoom_plus">zoom  + , -</string>
+  	<string name="map_title">map zoom: + -  select next: ></string>
+  	<string name="map_title_set_my_position">set my position: map zoom: + -, select </string>
+  	<string name="ok">ok</string>
+  	
+	<string name="menu_map">Map</string>
+ 	<string name="menu_messages">Messages</string>
+ 	<string name="menu_about">About</string>
+ 	<string name="menu_exit">Exit</string>
+ 	<string name="menu_preferences">Preferences</string>
+ 	<string name="menu_detail">Detail</string>
+ 	<string name="menu_refresh_map">Refresh</string>
+ 	<string name="menu_move_to_my_location">Move to my location</string>
+ 	<string name="menu_show">Show</string>
+ 	<string name="menu_show_mobiles">Show mobiles</string>
+ 	<string name="menu_show_all">Show all</string>
+ 	<string name="menu_show_car_only">Show car only</string>
+ 	<string name="menu_show_pedestrian_only">Show pedestrien only</string>
+ 	<string name="menu_select_next">Select next</string>
+ 	<string name="menu_select_previous">Select previous</string>
+ 	<string name="menu_zoom">Zoom</string>
+ 	<string name="menu_zoom_plus">Zoom plus : +</string>
+ 	<string name="menu_zoom_moins">Zoom moins : -</string>
+ 	<string name="menu_delete_message">Delete Message Selected</string>
+  
+ </resources>
