@@ -42,6 +42,8 @@ public class Car implements Comparable<Car>{
 	
 	private boolean isHiden=false;
 	
+	private int x_screen;
+	private int y_screen;
 	
 	private List<Message> listMessages = new ArrayList<Message>(); 
 	/**
@@ -255,4 +257,22 @@ public class Car implements Comparable<Car>{
 	public boolean isVisibleOnMap() {
 		return Preferences.getInstance().isInsideMapSpan(this.latitudeE6, this.longitudeE6);
 	}
+
+	public int getY_screen() {
+		return y_screen;
+	}
+
+	public void setY_screen(int y_screen) {
+		this.y_screen = y_screen;
+	}
+
+	public int getX_screen() {
+		return x_screen;
+	}
+
+	public void setX_screen(int x_screen) {
+		this.x_screen = x_screen;
+	}
+
+	
 }

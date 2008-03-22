@@ -1,5 +1,6 @@
 package bg.android.map;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,11 +32,14 @@ public class Overlay_Map extends Overlay {
 	private Bitmap bitmap_unknown;
 
 	private Bitmap bitmap_isActif_NO;
+	
+	public static final int R_MOBILE=7;
 
 	private ActivityMap map;
 
 	Paint paint1 = new Paint();
-
+	
+	
 	public Overlay_Map(ActivityMap map) {
 		super();
 		this.map = map;
@@ -77,15 +81,16 @@ public class Overlay_Map extends Overlay {
 
 	public void draw_PositionMobiles(Canvas canvas, PixelCalculator pixelCalculator, boolean shadow) {
 		List<Car> listCArs = CarsFactory.getInstance(this.map).getListCarsClone();
-		Iterator<Car> ite = listCArs.iterator();
+		Iterator<Car> iteCar = listCArs.iterator();
 		Car carSelected = null;
 		int x_CarSelected = 0;
 		int y_CArSelected = 0;
 		int show = Common.getInstance().getShow();
 		paint1.setStyle(Style.FILL);
+		List<Car> listCarDisplayed = new ArrayList<Car>();
 		
-		while (ite.hasNext()) {
-			Car car_ = ite.next();
+		while (iteCar.hasNext()) {
+			Car car_ = iteCar.next();
 			int latitude = car_.getLatitude();
 			int longitude = car_.getLongitude();
 			// Log.i("bg","draw_PositionMobiles latitude:"+latitude+"
@@ -97,6 +102,7 @@ public class Overlay_Map extends Overlay {
 			} else if ((show == Common.SHOW_CAR_ONLY) && (car_.getType() != Car.TYPE_VOITURE)) {
 			} else if ((show == Common.SHOW_TRAVELLERS_ONLY) && (car_.getType() != Car.TYPE_AUTO_STOPPEUR)) {
 			} else {
+
 				int color = getColor(car_);
 				int[] screenCoords = new int[2];
 				Point point = new Point(latitude, longitude);
@@ -112,14 +118,19 @@ public class Overlay_Map extends Overlay {
 				if (carSelected == null) {
 
 				} else {
-					// Log.i("bg","OverlayMap carSelected :
-					// "+carSelected.getName()+"
-					// "+carSelected.isVisibleOnMap());
 				}
-				canvas.drawCircle(screenCoords[0], screenCoords[1], 7, paint1);
+				int x = screenCoords[0];
+				int y = screenCoords[1];
+				car_.setX_screen(x);
+				car_.setY_screen(y);
+				if ((x >= 0) && (x < this.map.getMapView().getWidth()) && (y >= 0) && (y < this.map.getMapView().getHeight())) {
+					listCarDisplayed.add(car_);
+					canvas.drawCircle(x, y, R_MOBILE, paint1);
+				}
 			}
 		}
 		paintCarSelected(carSelected, canvas, x_CarSelected, y_CArSelected);
+		this.map.setListCarDisplayed(listCarDisplayed);
 	}
 
 	private Bitmap getBitMap(Car car_) {
@@ -150,16 +161,16 @@ public class Overlay_Map extends Overlay {
 		}
 		int h = 30;
 		// working canvas.drawArc(rf, 10.0f, 200.0f,paint1);
-		int yb=y+20;
-		int bb =10;
+		int yb = y + 20;
+		int bb = 10;
 		paint1.setColor(Color.WHITE);
-		for(int i=0; i<bb;i++){
-			canvas.drawLine(x, y, x + h, yb+i, paint1);
+		for (int i = 0; i < bb; i++) {
+			canvas.drawLine(x, y, x + h, yb + i, paint1);
 		}
 		paint1.setColor(Color.BLACK);
-		
+
 		canvas.drawLine(x, y, x + h, yb, paint1);
-		canvas.drawLine(x, y, x + h, yb+bb, paint1);
+		canvas.drawLine(x, y, x + h, yb + bb, paint1);
 		paintCarSelectedFrame(carSelected, canvas, x + h, y);
 	}
 
@@ -186,7 +197,7 @@ public class Overlay_Map extends Overlay {
 		paint1.setStyle(Style.STROKE);
 		canvas.drawRoundRect(rect, rx, ry, paint1);
 		paint1.setStyle(Style.FILL);
-		
+
 		canvas.drawText(text, x + 10, y + 10, paint1);
 		this.map.setTitle(carSelected.getMapTittleStr());
 		canvas.drawBitmap(bitmap, x, y + 12, paint1);
@@ -273,4 +284,5 @@ public class Overlay_Map extends Overlay {
 		paint1.setTextSize(fSize);
 	}
 
+	
 }

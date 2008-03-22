@@ -1,11 +1,14 @@
 package bg.android;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.Menu.Item;
 import bg.android.coVoiturage.Car;
@@ -17,57 +20,59 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayController;
 import com.google.android.maps.Point;
+import static bg.android.map.Overlay_Map.R_MOBILE;
 
 public class ActivityMap extends MapActivity {
 	private MapView mMapView;
-	
+
 	private OverlayController overlayController;
 
-	private Overlay_Map overlayMyPosition ;
+	private Overlay_Map overlayMyPosition;
+
+	private List<Car> listCarDisplayed = new ArrayList<Car>();
 
 	@Override
 	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);		
+		super.onCreate(icicle);
 		this.overlayMyPosition = new Overlay_Map(this);
 		this.refreshListCar();
 		this.mMapView = new MapView(this);
 		MapController mmapControler = mMapView.getController();
-		mmapControler.centerMapTo(Preferences.getInstance().getMyLocation(),true);
+		mmapControler.centerMapTo(Preferences.getInstance().getMyLocation(), true);
 		// mmapControlerc.
 		int zoomLevel = Preferences.getInstance().getZoomLevel();
-		
+
 		mmapControler.zoomTo(zoomLevel);
 		overlayController = mMapView.createOverlayController();
 		overlayController.add(this.overlayMyPosition, false);
 
 		setContentView(mMapView);
-		
-		//this.setMode(Common.MODE_SHOW_MOBILES);
+
+		// this.setMode(Common.MODE_SHOW_MOBILES);
 		mmapControler.animateTo(Preferences.getInstance().getMyLocation());
 		this.mMapView.requestFocus();
 		Common.getInstance().setJustCreated(true);
 		this.setTittle();
-		
+
 	}
-	
-	private void  setTittle(){
-		if (Common.getInstance().getMode()==Common.MODE_SHOW_MOBILES){
+
+	private void setTittle() {
+		if (Common.getInstance().getMode() == Common.MODE_SHOW_MOBILES) {
 			this.setTitle(R.string.map_title);
 		} else {
 			this.setTitle(R.string.map_title_set_my_position);
 		}
 	}
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, Common.ACTION_REFRESH, R.string.menu_refresh_map);	
+		menu.add(0, Common.ACTION_REFRESH, R.string.menu_refresh_map);
 		menu.add(0, Common.ACTION_DISPLAY_MESSAGES, R.string.menu_messages);
 		menu.add(0, Common.ACTION_DISPLAY_PREFERENCES, R.string.menu_preferences);
-		
+
 		menu.add(0, Common.ACTION_MOVE_TO_MY_LOCATION, R.string.menu_move_to_my_location);
-		//menu.add(0, Common.ACTION_SET_MY_POSITION, "Set My Position");
+		// menu.add(0, Common.ACTION_SET_MY_POSITION, "Set My Position");
 		SubMenu sousMenuShow = menu.addSubMenu(0, Common.ACTION_SHOW_MOBILES, R.string.menu_show);
 		sousMenuShow.add(0, Common.ACTION_SHOW_ALL, R.string.menu_show_all);
 		sousMenuShow.add(0, Common.ACTION_SHOW_CAR_ONLY, R.string.menu_show_car_only);
@@ -78,17 +83,15 @@ public class ActivityMap extends MapActivity {
 		sousMenuZoom.add(0, Common.ACTION_ZOOM_PLUS, R.string.menu_zoom_plus);
 		sousMenuZoom.add(0, Common.ACTION_ZOOM_MOINS, R.string.menu_zoom_moins);
 		menu.add(0, Common.ACTION_ABOUT, R.string.menu_about);
-		
+
 		return true;
 	}
-	
-	
 
 	@Override
 	public boolean onMenuItemSelected(int featureId, Item item) {
 		super.onMenuItemSelected(featureId, item);
-		Preferences.getInstance().setCentreEcran(this.mMapView.getMapCenter(),this.mMapView.getLatitudeSpan(),this.mMapView.getLongitudeSpan());		
-		
+		Preferences.getInstance().setCentreEcran(this.mMapView.getMapCenter(), this.mMapView.getLatitudeSpan(), this.mMapView.getLongitudeSpan());
+
 		switch (item.getId()) {
 			case Common.ACTION_HIDE_ALL:
 				this.show(Common.SHOW_NOTHING);
@@ -115,32 +118,29 @@ public class ActivityMap extends MapActivity {
 				this.selectNext();
 				return true;
 			case Common.ACTION_MOVE_TO_MY_LOCATION:
-				this.moveToMyLocation() ;
+				this.moveToMyLocation();
 				return true;
 			case Common.ACTION_SHOW_ALL:
 				showMobiles();
 				CarsFactory.getInstance(this).showAll();
 				this.selectNext();
-				return true;	
+				return true;
 			case Common.ACTION_SHOW_CAR_ONLY:
 				this.show(Common.SHOW_CAR_ONLY);
 				break;
 			case Common.ACTION_SHOW_TRAVELLERS_ONLY:
-				this.show(Common.SHOW_TRAVELLERS_ONLY); 
+				this.show(Common.SHOW_TRAVELLERS_ONLY);
 				break;
 			case Common.ACTION_HIDDEN:
-				Preferences.getInstance().setHidden_flipflop(this) ;
+				Preferences.getInstance().setHidden_flipflop(this);
 				this.refreshListCar();
 				this.repaintMap_();
 				break;
 
-				
 		}
-		Common.getInstance().onMenuItemSelected(featureId, item, this);		
+		Common.getInstance().onMenuItemSelected(featureId, item, this);
 		return true;
 	}
-	
-	
 
 	private void show(int show) {
 		Common.getInstance().setShow(show);
@@ -149,32 +149,32 @@ public class ActivityMap extends MapActivity {
 
 	private void moveToMyLocation() {
 		MapController mmapControler = mMapView.getController();
-		mmapControler.animateTo(Preferences.getInstance().getMyLocation());			
+		mmapControler.animateTo(Preferences.getInstance().getMyLocation());
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		Common.getInstance().setJustCreated(false);
 		super.onKeyDown(keyCode, event);
-		
+
 		this.mMapView.requestFocus();
 		this.mMapView.bringToFront();
-		//this.mMapView.forceLayout();
-		Preferences.getInstance().setCentreEcran(this.mMapView.getMapCenter(),this.mMapView.getLatitudeSpan(),this.mMapView.getLongitudeSpan());
-		
+		// this.mMapView.forceLayout();
+		Preferences.getInstance().setCentreEcran(this.mMapView.getMapCenter(), this.mMapView.getLatitudeSpan(), this.mMapView.getLongitudeSpan());
+
 		boolean r = false;
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_CAP:
 			case KeyEvent.KEYCODE_B:
-					selectPrevious();
-				r=true;
+				selectPrevious();
+				r = true;
 				break;
 			case KeyEvent.KEYCODE_N:
 				selectNext();
-				r=true;
+				r = true;
 				break;
 			case KeyEvent.KEYCODE_I:
 			case KeyEvent.KEYCODE_MINUS:
-						// Zoom In
+				// Zoom In
 				this.zoom_moins();
 				r = true;
 				break;
@@ -185,7 +185,7 @@ public class ActivityMap extends MapActivity {
 				r = true;
 				break;
 			case KeyEvent.KEYCODE_DPAD_CENTER:
-				 if (Common.getInstance().getMode() == Common.MODE_SET_MY_POSITION) {
+				if (Common.getInstance().getMode() == Common.MODE_SET_MY_POSITION) {
 					super.setTitle("set ");
 					this.setMode(Common.MODE_SHOW_MOBILES);
 					this.setMyLocationManuel();
@@ -196,18 +196,17 @@ public class ActivityMap extends MapActivity {
 					Common.getInstance().showDetailCarSelected(this);
 					return true;
 				}
-				break;		
+				break;
 			case KeyEvent.KEYCODE_DPAD_DOWN:
 			case KeyEvent.KEYCODE_DPAD_UP:
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 			case KeyEvent.KEYCODE_DPAD_RIGHT:
-				   this.mMapView.getController().onKey(this.mMapView, keyCode, event);
+				this.mMapView.getController().onKey(this.mMapView, keyCode, event);
 				break;
 		}
-		Preferences.getInstance().setCentreEcran(this.mMapView.getMapCenter(),this.mMapView.getLatitudeSpan(),this.mMapView.getLongitudeSpan());
+		Preferences.getInstance().setCentreEcran(this.mMapView.getMapCenter(), this.mMapView.getLatitudeSpan(), this.mMapView.getLongitudeSpan());
 		return r;
 	}
-
 
 	private void selectPrevious() {
 		CarsFactory.getInstance(this).selectPrevious2();
@@ -239,11 +238,8 @@ public class ActivityMap extends MapActivity {
 		int level = mMapView.getZoomLevel();
 		int latSpan = mMapView.getLatitudeSpan();
 		int longSpan = mMapView.getLongitudeSpan();
-		Preferences.getInstance().setZoomLevelAndSpan(this,latSpan, longSpan, level);
+		Preferences.getInstance().setZoomLevelAndSpan(this, latSpan, longSpan, level);
 	}
-
-	
-	
 
 	private void repaintMap_() {
 		Point p = this.mMapView.getMapCenter();
@@ -263,23 +259,16 @@ public class ActivityMap extends MapActivity {
 		this.repaintMap_();
 	}
 
-	
-	
-
-	
-
 	private void refreshListCar() {
 		CarsFactory.getInstance(this).wsRequestGetCars();
 	}
 
-	
 	private void setMyLocationManuel() {
 		Point p = this.mMapView.getMapCenter();
 		Preferences.getInstance().setMyLocation(this, p);
 		CarsFactory.getInstance(this).wsRequestSetLocalisation();
 	}
 
-		
 	private void setMode(int mode) {
 		Common.getInstance().setMode(mode);
 		this.repaintMap_();
@@ -300,12 +289,50 @@ public class ActivityMap extends MapActivity {
 		return mMapView;
 	}
 
-	
-
-	public void updateCarList(SortedSet<Car> l ) {
+	public void updateCarList(SortedSet<Car> l) {
 		this.repaintMap_();
 	}
 
-	
+	public List<Car> getListCarDisplayed() {
+		return listCarDisplayed;
+	}
+
+	public void setListCarDisplayed(List<Car> listCarDisplayed) {
+		this.listCarDisplayed = listCarDisplayed;
+	}
+
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		int action = ev.getAction();
+		switch (action) {
+			case MotionEvent.ACTION_UP:
+				int x = (int) ev.getX();
+				int y = (int) ev.getY();
+				Car car = getCarClicked(x, y);
+				Log.i("bg", "dispatchTouchEvent up x:" + x + "  y:" + y+"  size:"+this.listCarDisplayed.size()+"   carClicked:"+car);
+
+				break;
+
+		}
+		return super.dispatchTouchEvent(ev);
+	}
+
+	private Car getCarClicked(int x, int y) {
+		MapView m =this.getMapView();
+		Log.i("bg","  top: "+m.getTop()+"  left:"+m.getLeft()+"  right:"+m.getRight()+"  ScrollX:"+m.getScrollX()+" ScrollY:"+m.getScrollY()+" ");
+		for (Car car : this.listCarDisplayed) {
+			int xCar = car.getX_screen();
+			int yCar = car.getY_screen();
+			int xx = x ;
+			int yy = y ;
+			int dX = Math.abs(xx - xCar);
+			int dY = Math.abs(yy - yCar);
+			Log.i("bg"," x :"+x+"  xx:"+xx+" xCar:"+xCar+" dX:"+dX+" :: y:"+y+" yy:"+yy+" yCar:"+yCar+" dY:"+dY);
+			if ((dX <=(2*R_MOBILE)) && (dY <=(2*R_MOBILE))){
+				return car;
+			}
+		}
+		return null;
+	}
 
 }
