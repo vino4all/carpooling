@@ -288,9 +288,6 @@ public class ActivityMap extends MapActivity {
 		}
 	}
 
-	public Point getMyLocation___DEPRECATED() {
-		return Preferences.getInstance().getMyLocation();
-	}
 
 	public MapView getMapView() {
 		return mMapView;
@@ -311,8 +308,6 @@ public class ActivityMap extends MapActivity {
 
 	public Car getCarClicked(int x, int y) {
 		MapView m =this.getMapView();
-		this.setTitle("aaaaa");
-		Log.i("bg","  top: "+m.getTop()+"  left:"+m.getLeft()+"  right:"+m.getRight()+"  ScrollX:"+m.getScrollX()+" ScrollY:"+m.getScrollY());
 		for (Car car : this.listCarDisplayed) {
 			int xCar = car.getX_screen();
 			int yCar = car.getY_screen();
