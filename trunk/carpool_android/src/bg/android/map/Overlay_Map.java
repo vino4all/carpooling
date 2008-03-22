@@ -265,8 +265,8 @@ public class Overlay_Map extends Overlay {
 			String text_connecting = "" + this.map.getText(R.string.map_message_connectingServer);
 			draw_comment(canvas, x, y, text_connecting);
 			y = y + 40;
-			String text_zoom = "" + this.map.getText(R.string.map_message_zoom_plus);
-			draw_comment(canvas, x, y, text_zoom);
+			//String text_zoom = "" + this.map.getText(R.string.map_message_zoom_plus);
+			//draw_comment(canvas, x, y, text_zoom);
 		}
 	}
 

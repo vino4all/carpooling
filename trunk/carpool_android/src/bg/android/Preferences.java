@@ -76,7 +76,7 @@ public class Preferences {
 			SharedPreferences settings = aContext.getSharedPreferences(PREFERENCES_NAME, 0);
 			int latitudeE6 = settings.getInt("latitudeE6", (int) (45.416402 * 1000000));
 			int longitudeE6 = settings.getInt("longitudeE6", (int) (1.025078 * 1000000));
-			this.type = settings.getInt("type", TYPE_UNKNOW);
+			this.type = settings.getInt("type", TYPE_AUTO_STOPPEUR);
 			this.myLocation = new Point(latitudeE6, longitudeE6);
 			this.centreEcran = this.myLocation;
 			this.latitudeSpan = settings.getInt("latitudeSpan", 50);
