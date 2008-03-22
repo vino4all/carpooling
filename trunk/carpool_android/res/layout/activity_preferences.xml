@@ -16,7 +16,7 @@
 	</LinearLayout>
 	
 	<RadioGroup android:id="@+id/menu_hidden" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" >
-    	<RadioButton android:textColor="@drawable/red_bg_text"  android:text="@string/radio_group_2_hidden" android:id="@+id/radio_group_2_hidden" />
+    	<RadioButton android:textColor="@drawable/red_bg_text"  android:text="@string/radio_group_2_hidden"       android:id="@+id/radio_group_2_hidden" />
     	<RadioButton android:textColor="@drawable/red_bg_text"  android:text="@string/radio_group_2_hidden_false" android:id="@+id/radio_group_2_hidden_false" />
     </RadioGroup>
 	

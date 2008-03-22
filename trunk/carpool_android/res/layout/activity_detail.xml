@@ -2,7 +2,7 @@
 
 <ScrollView android:background="@drawable/white_bg" xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:scrollbars="none">
 <LinearLayout android:background="@drawable/yellow_bg"  xmlns:android="http://schemas.android.com/apk/res/android"   android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<TextView android:background="@drawable/yellow_bg"  android:id="@+id/detailTittle"   android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/detail_tittle" />
+	<TextView android:textColor="@drawable/red_bg_text" android:background="@drawable/yellow_bg"  android:id="@+id/detailTittle"   android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/detail_tittle" />
     <LinearLayout  android:background="@drawable/red_bg" xmlns:android="http://schemas.android.com/apk/res/android"  android:orientation="horizontal"  android:layout_width="fill_parent" android:layout_height="fill_parent">
        <Button android:id="@+id/detailMap"      android:text="@string/detailButtonMap"	  android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
        <Button android:id="@+id/detailNext"     android:text="@string/detailButtonNext"	  android:layout_width="wrap_content" 	android:layout_height="wrap_content" />
@@ -13,21 +13,21 @@
  	</LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
     	<!--  ImageView android:id="@+id/detailImage" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:src="@drawable/ua_android"/ -->
- 		<TextView  android:id="@+id/detailName"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detail_name" />
-		<TextView  android:id="@+id/detailHidden"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detail_hidden" />
+ 		<TextView  android:textColor="@drawable/red_bg_text"  android:id="@+id/detailName"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detail_name" />
+		<TextView  android:textColor="@drawable/red_bg_text"  android:id="@+id/detailHidden"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detail_hidden" />
     	<ImageView android:id="@+id/detailImageType" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:src="@drawable/ua_android"/>
  	</LinearLayout>
  	
-    <TextView android:id="@+id/detailDestination"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Destination" />
+    <TextView android:textColor="@drawable/red_bg_text"  android:id="@+id/detailDestination"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Destination" />
 
-	<TextView android:id="@+id/detailPrix"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" />
+	<TextView android:textColor="@drawable/red_bg_text"  android:id="@+id/detailPrix"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" />
  
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
-   		<TextView android:id="@+id/detailTelephone"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
+   		<TextView android:textColor="@drawable/red_bg_text" android:id="@+id/detailTelephone"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="" />
         <Button   android:id="@+id/detailPhoneCall"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Call" />
      </LinearLayout>
        
-  	<TextView android:id="@+id/detailXmpp"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" />
+  	<TextView android:textColor="@drawable/red_bg_text"  android:id="@+id/detailXmpp"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" />
    
   	<EditText android:id="@+id/detailMessageToSend"    android:layout_width="fill_parent"  android:layout_height="wrap_content"    android:text="" android:lines="2" />
  	<Button android:id="@+id/detailSendXMPP"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/detail_envoi_message" />
