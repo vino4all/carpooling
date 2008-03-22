@@ -11,8 +11,10 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.Menu.Item;
+import android.view.WindowManager.LayoutParams;
 import bg.android.coVoiturage.Car;
 import bg.android.coVoiturage.CarsFactory;
+import bg.android.map.MapViewBg;
 import bg.android.map.Overlay_Map;
 
 import com.google.android.maps.MapActivity;
@@ -36,7 +38,7 @@ public class ActivityMap extends MapActivity {
 		super.onCreate(icicle);
 		this.overlayMyPosition = new Overlay_Map(this);
 		this.refreshListCar();
-		this.mMapView = new MapView(this);
+		this.mMapView = new MapViewBg(this);
 		MapController mmapControler = mMapView.getController();
 		mmapControler.centerMapTo(Preferences.getInstance().getMyLocation(), true);
 		// mmapControlerc.
@@ -217,6 +219,11 @@ public class ActivityMap extends MapActivity {
 		CarsFactory.getInstance(this).selectNext2();
 		this.repaintMap_();
 	}
+	
+	public void selectCar(Car carSelected){
+		CarsFactory.getInstance(this).selectCar(carSelected);
+		this.repaintMap_();
+	}
 
 	private void zoom_moins() {
 		int level = mMapView.getZoomLevel();
@@ -301,25 +308,11 @@ public class ActivityMap extends MapActivity {
 		this.listCarDisplayed = listCarDisplayed;
 	}
 
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		int action = ev.getAction();
-		switch (action) {
-			case MotionEvent.ACTION_UP:
-				int x = (int) ev.getX();
-				int y = (int) ev.getY();
-				Car car = getCarClicked(x, y);
-				Log.i("bg", "dispatchTouchEvent up x:" + x + "  y:" + y+"  size:"+this.listCarDisplayed.size()+"   carClicked:"+car);
 
-				break;
-
-		}
-		return super.dispatchTouchEvent(ev);
-	}
-
-	private Car getCarClicked(int x, int y) {
+	public Car getCarClicked(int x, int y) {
 		MapView m =this.getMapView();
-		Log.i("bg","  top: "+m.getTop()+"  left:"+m.getLeft()+"  right:"+m.getRight()+"  ScrollX:"+m.getScrollX()+" ScrollY:"+m.getScrollY()+" ");
+		this.setTitle("aaaaa");
+		Log.i("bg","  top: "+m.getTop()+"  left:"+m.getLeft()+"  right:"+m.getRight()+"  ScrollX:"+m.getScrollX()+" ScrollY:"+m.getScrollY());
 		for (Car car : this.listCarDisplayed) {
 			int xCar = car.getX_screen();
 			int yCar = car.getY_screen();
