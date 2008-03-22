@@ -20,7 +20,7 @@ public class Preferences {
 
 	public static final String PREFERENCES_NAME = "bgMap";
 
-	private int type = TYPE_UNKNOW;
+	private int type = TYPE_AUTO_STOPPEUR;
 
 	private int zoomLevel = 2;
 
