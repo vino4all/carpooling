@@ -120,7 +120,7 @@ public class ActivityAbout extends Activity implements  OnClickListener {
 			}
 			CarsFactory.getInstance().sendMessage(message);
 			this.editText.setText("");
-			logPopupMessage("Message send ");
+			logPopupMessage(this.getText(R.string.about_message_sent));
 		} catch (Exception e) {
 			Log.i("bg", "sendXmpp", e);
 			logPopupMessage("ERROR xmpp ");
