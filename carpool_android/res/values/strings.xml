@@ -90,4 +90,8 @@
  	<string name="menu_zoom_moins">Zoom moins : -</string>
  	<string name="menu_delete_message">Delete Message Selected</string>
   
+  	<string name="alert_dialog_ok">ok</string>
+  	<string name="alert_dialog_warning">Warning</string>
+    <string name="alert_dialog_fillField">Please, \n fill field \"name\" \"destination\" and \"price\</string>
+    
  </resources>
