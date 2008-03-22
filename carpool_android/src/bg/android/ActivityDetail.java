@@ -227,7 +227,7 @@ public class ActivityDetail extends Activity implements OnClickListener {
 				MessagesFactory.getInstance().createMessage(car, true, text, destination, prix);
 				this.textView_HistoriqueMessages.setText(this.getHistoriquesMessages());
 				this.editText.setText("");
-				Log.i("bg", "Message send to " + this.car.getXmppAdress());
+				Log.i("bg", "Message sent to " + this.car.getXmppAdress());
 				logPopupMessage("Message sent to:"+xmppAdress+"  text: "+text);
 			}
 		} catch (Exception e) {
