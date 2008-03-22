@@ -1,7 +1,9 @@
 package bg.android;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ApplicationContext;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +25,9 @@ import com.google.android.maps.Point;
 public class ActivityPreferences extends Activity implements RadioGroup.OnCheckedChangeListener, OnClickListener {
 
 	private RadioGroup radioGroup_type;
+
 	private RadioGroup radioGroup_hidden;
+
 	private RadioGroup radioGroup_localizator;
 
 	private EditText editText_myName;
@@ -32,10 +36,7 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 
 	private EditText editText_myPrix;
 
-	
-	//private CheckBox checkBox_updateGPSPosition ;
-
-
+	// private CheckBox checkBox_updateGPSPosition ;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -79,21 +80,19 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 			CarsFactory.getInstance();
 			MessagesFactory.getInstance().initMessages(this);
 			this.setType_and_hidden_and_localizator();
-			
-			//this.setTitle(""+this.hashCode());
+
+			// this.setTitle(""+this.hashCode());
 		} catch (Exception e) {
-			Log.e("bg","Execption Init ",e);
+			Log.e("bg", "Execption Init ", e);
 		}
 	}
-
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(0, Common.ACTION_DISPLAY_MESSAGES, R.string.menu_messages);
 		menu.add(0, Common.ACTION_DISPLAY_MAP, R.string.menu_map);
-		//menu.add(0, Common.ACTION_DISPLAY_DETAIL, "detail");
+		// menu.add(0, Common.ACTION_DISPLAY_DETAIL, "detail");
 		menu.add(0, Common.ACTION_ABOUT, R.string.menu_about);
 		menu.add(0, Common.ACTION_EXIT, R.string.menu_exit);
 		return true;
@@ -106,7 +105,7 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 		return true;
 	}
 
-	private void setType_and_hidden_and_localizator() { 
+	private void setType_and_hidden_and_localizator() {
 		int type = Preferences.getInstance().getType();
 		if (type == Preferences.TYPE_AUTO_STOPPEUR) {
 			RadioButton rb = (RadioButton) findViewById(R.id.radio_I_am_passager);
@@ -118,20 +117,20 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 			((RadioButton) findViewById(R.id.radio_I_am_vehicule)).setChecked(false);
 			((RadioButton) findViewById(R.id.radio_I_am_passager)).setChecked(false);
 		}
-		boolean isHidden  = Preferences.getInstance().isHidden();
-		if (isHidden){
+		boolean isHidden = Preferences.getInstance().isHidden();
+		if (isHidden) {
 			RadioButton rb = (RadioButton) findViewById(R.id.radio_group_2_hidden);
 			rb.setChecked(true);
-		}else {
+		} else {
 			RadioButton rb = (RadioButton) findViewById(R.id.radio_group_2_hidden_false);
 			rb.setChecked(true);
 		}
-		
+
 		boolean isLocateByGPS = Preferences.getInstance().isLocateByGPS();
-		if (isLocateByGPS){
+		if (isLocateByGPS) {
 			RadioButton rb = (RadioButton) findViewById(R.id.radio_preferences_location_gps);
 			rb.setChecked(true);
-		}else {
+		} else {
 			RadioButton rb = (RadioButton) findViewById(R.id.radio_preferences_location_map);
 			rb.setChecked(true);
 		}
@@ -140,6 +139,10 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 	@Override
 	public void onClick(View view) {
 		this.saveParams();
+		if (!this.mandatoryFieldAreOK()){
+			this.dialogShow();
+			return;
+		}
 		int id = view.getId();
 		switch (id) {
 			case R.id.appButtonMap:
@@ -160,10 +163,12 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 			case R.id.appButtonAbout2:
 				Common.getInstance().displayAbout(this);
 				break;
-			
+
 		}
 	}
 	
+
+
 	private void displayMap_SHOW_MOBILES() {
 		Common.getInstance().setMode(Common.MODE_SHOW_MOBILES);
 		Common.getInstance().displayMap(this);
@@ -176,13 +181,12 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 
 	private void setPositionGPs() {
 		try {
-			Point p  = ServiceLocalisationBg.getInstance().processGPS();
+			Point p = ServiceLocalisationBg.getInstance().processGPS();
 			this.update_("Location done", p);
 		} catch (Exception e) {
 			this.logPopupMessage("Exception " + e.getMessage());
 		}
 	}
-	
 
 	@Override
 	public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
@@ -192,54 +196,50 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 			Preferences.getInstance().setType(this, Preferences.TYPE_AUTO_STOPPEUR);
 		} else if (idChecked_type == R.id.radio_I_am_vehicule) {
 			Preferences.getInstance().setType((ApplicationContext) this, Preferences.TYPE_VOITURE);
-		} else  {
+		} else {
 			Preferences.getInstance().setType((ApplicationContext) this, Preferences.TYPE_UNKNOW);
 		}
 		int idChecked_hidden = this.radioGroup_hidden.getCheckedRadioButtonId();
-		if (idChecked_hidden == R.id.radio_group_2_hidden){
-			Preferences.getInstance().setHidden(this,true);
-		}else if (idChecked_hidden == R.id.radio_group_2_hidden){
-			Preferences.getInstance().setHidden(this,false);
+		if (idChecked_hidden == R.id.radio_group_2_hidden) {
+			Preferences.getInstance().setHidden(this, true);
+		} else if (idChecked_hidden == R.id.radio_group_2_hidden) {
+			Preferences.getInstance().setHidden(this, false);
 		}
-		
+
 		int idChecked_localizator = this.radioGroup_localizator.getCheckedRadioButtonId();
-		if (idChecked_localizator == R.id.radio_preferences_location_gps){
+		if (idChecked_localizator == R.id.radio_preferences_location_gps) {
 			Preferences.getInstance().setLocalizator(this, Preferences.LOCALIZATOR_GPS);
-		}else if (idChecked_localizator == R.id.radio_preferences_location_map){
+		} else if (idChecked_localizator == R.id.radio_preferences_location_map) {
 			Preferences.getInstance().setLocalizator(this, Preferences.LOCALIZATOR_MAP);
 		}
-		
 
 	}
-
-	
 
 	private void saveParams() {
 		Preferences p = Preferences.getInstance();
 		p.setDestination(this, "" + editText_myDestination.getText());
 		p.setName(this, "" + editText_myName.getText());
 		p.setPrix(this, "" + editText_myPrix.getText());
-		
+
 	}
 
 	private void logPopupMessage(CharSequence msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();		
-		Log.i("bg","Activity Preference popup :"+msg);
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+		Log.i("bg", "Activity Preference popup :" + msg);
 	}
 
-	
-	public void update_(Object message, Point p ) {
-		if (p==null){
+	public void update_(Object message, Point p) {
+		if (p == null) {
 			return;
 		}
-		if (p==null){
+		if (p == null) {
 			return;
 		}
 		if ((p.getLatitudeE6() == 0) && (p.getLongitudeE6() == 0)) {
 			Log.e("bg", " !ActivityPreferences latitude and longitude 0!");
 			this.logPopupMessage("!Location no available !");
 		} else {
-			Preferences.getInstance().setMyLocation(this,p);
+			Preferences.getInstance().setMyLocation(this, p);
 		}
 		this.logPopupMessage("Location done " + message);
 	}
@@ -250,6 +250,28 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 		MessagesFactory.getInstance().onDestroy();
 	}
 	
-	
+	private boolean mandatoryFieldAreOK() {
+		if (this.editText_myName.getText().length()<=0){
+			return false;
+		}
+		if (this.editText_myDestination.getText().length()<=0){
+			return false;
+		}
+		return true;
+	}
+
+	private void dialogShow() {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog.setIcon(R.drawable.auto_icone);
+		alertDialog.setTitle(R.string.alert_dialog_warning);
+		alertDialog.setMessage(R.string.alert_dialog_fillField);
+		alertDialog.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+
+			}
+		});
+
+		alertDialog.show();
+	}
 
 }
