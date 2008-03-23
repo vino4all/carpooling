@@ -256,9 +256,7 @@ public class CarsFactory implements Runnable {
 
 	public List<Car> getListCarsClone() {
 		List<Car> listClone = new ArrayList<Car>();
-		Iterator<Car> ite = this.listCars.iterator();
 		for (Car c : listCars) {
-			// java.
 			listClone.add(c);
 		}
 		return listClone;
