@@ -62,6 +62,7 @@
      <string name="about_title">Carpool about</string>
      <string name="about_text_1">developped by : Bertrand Guiral, \n mail: bertrand.guiral@gmail.com</string>
      <string name="about_text_2">\nThank you for send me bugs, ideas, or encouragements</string>
+ 	 <string name="about_message_sent">Message sent\n Thank You</string>
      <string name="about_myXmppAdress">bertrand.guiral@gmail.com</string>
 
 	<string name="map_message_connectingServer">Connecting Server</string>
