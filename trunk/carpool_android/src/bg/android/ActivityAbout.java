@@ -1,9 +1,7 @@
 package bg.android;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;

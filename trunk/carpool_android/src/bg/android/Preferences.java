@@ -1,11 +1,8 @@
 package bg.android;
 
-import android.app.AlertDialog;
 import android.app.ApplicationContext;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.view.View;
 
 import com.google.android.maps.Point;
 

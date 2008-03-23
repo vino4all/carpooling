@@ -1,9 +1,5 @@
 package bg.android.map;
 
-import java.util.Map;
-
-import android.content.Context;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import bg.android.ActivityMap;
