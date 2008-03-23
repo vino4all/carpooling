@@ -15,7 +15,7 @@ import bg.android.coVoiturage.CarsFactory;
 
 public class ActivityAbout extends Activity implements OnClickListener {
 
-	public static String tHtml = "<html><body style=\"font-size:12px;border: 2px solid #ff0000;padding-left:4px;\">" + "<br/><a href=\"http://carpool-android.blogspot.com/\">Blog carpool Android</a>" + "<br/><a href=\"http://carpool-android-help.blogspot.com/\">Blog Help</a>" +"<br/> <a href=\"http://www.gnu.org/licenses/gpl-3.0-standalone.html\">Licence</a>+ "</body></html>";
+	public static String tHtml = "<html><body style=\"font-size:12px;border: 2px solid #ff0000;padding-left:4px;\">" + "<br/><a href=\"http://carpool-android.blogspot.com/\">Blog carpool Android</a>" + "<br/><a href=\"http://carpool-android-help.blogspot.com/\">Blog Help</a>" +"<br/> <a href=\"http://www.gnu.org/licenses/gpl-3.0-standalone.html\">Licence gpl</a>"+ "</body></html>";
 
 	/**
 	 * Setup the XMPP Session using a service connection
