@@ -20,16 +20,14 @@ import bg.android.messages.MessagesFactory;
 
 public class ActivityMessages extends ListActivity implements IUpdatable {
 
-
-
 	private List<Message> messagesList;
 
 	private TextView textViewHeader;
 
-	
 	public ActivityMessages() {
 		super();
 	}
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -54,7 +52,7 @@ public class ActivityMessages extends ListActivity implements IUpdatable {
 		menu.add(0, Common.ACTION_ABOUT, R.string.menu_about);
 		return true;
 	}
-	
+
 	@Override
 	public boolean onMenuItemSelected(int featureId, Item item) {
 		super.onMenuItemSelected(featureId, item);
@@ -63,10 +61,9 @@ public class ActivityMessages extends ListActivity implements IUpdatable {
 				this.deleteMessageSelected();
 				return true;
 		}
-		Common.getInstance().onMenuItemSelected(featureId, item, this);		
+		Common.getInstance().onMenuItemSelected(featureId, item, this);
 		return true;
 	}
-
 
 	private void updateMessageList() {
 		try {
@@ -80,10 +77,10 @@ public class ActivityMessages extends ListActivity implements IUpdatable {
 				// textViewResultat.append("\ncar: " + car + "\n");
 			}
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.message_row, listMessagesStr);
-		
+
 			setListAdapter(adapter);
 		} catch (Exception e) {
-			Log.e("bg","updateMessageList",e);
+			Log.e("bg", "updateMessageList", e);
 		}
 	}
 
@@ -92,26 +89,26 @@ public class ActivityMessages extends ListActivity implements IUpdatable {
 		updateMessageList();
 	}
 
-	public void onListItemClick(ListView l, View v, int position, long id){
-		Log.i("bg", "onListItemClick  position: "+position);		
-		super.onListItemClick( l, v, position,  id);
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		Log.i("bg", "onListItemClick  position: " + position);
+		super.onListItemClick(l, v, position, id);
 		showMessageSelected();
 	}
-	
-	private void deleteMessageSelected(){
+
+	private void deleteMessageSelected() {
 		Message message = this.getMessageSelected();
 		MessagesFactory.getInstance().remove(message);
 		this.updateMessageList();
 	}
-	
-	private Message getMessageSelected(){
+
+	private Message getMessageSelected() {
 		int i = this.getSelectedItemPosition();
 		Message message = this.messagesList.get(i);
 		return message;
 	}
-	
+
 	private void showMessageSelected() {
-		//int i = this.getSelection();
+		// int i = this.getSelection();
 		Message message = this.getMessageSelected();
 		Car car = message.getCar();
 		if (car == null) {

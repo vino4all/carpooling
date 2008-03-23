@@ -40,17 +40,17 @@ public class BgXmppDataMessageReceiver2 extends IntentReceiver {
 					String destination = bundle.getString("destination");
 					String name = bundle.getString("name");
 					String fromXmpp = bundle.getString("xmpp");
-					String latitudeE6Str="";
-					String longitudeE6Str="";
-						latitudeE6Str = bundle.getString("latitudeE6");
-						longitudeE6Str = bundle.getString("longitudeE6");
+					String latitudeE6Str = "";
+					String longitudeE6Str = "";
+					latitudeE6Str = bundle.getString("latitudeE6");
+					longitudeE6Str = bundle.getString("longitudeE6");
 
 					comment += "idAndroid:" + idAndroid + " text:" + text + " prix:" + prix + " destination:" + destination + " name:" + name;
 					Car car = CarsFactory.getInstance().getCarById("" + idAndroid);
 					if (car == null) {
-						car = CarsFactory.getInstance().getNewCar(name, fromXmpp, destination, latitudeE6Str, longitudeE6Str,idAndroid);
+						car = CarsFactory.getInstance().getNewCar(name, fromXmpp, destination, latitudeE6Str, longitudeE6Str, idAndroid);
 					}
-					
+
 					if (car == null) {
 						Log.e("bg", "xmpp. ! Car is null! Should never happen");
 					} else {
@@ -58,12 +58,12 @@ public class BgXmppDataMessageReceiver2 extends IntentReceiver {
 						car.addHistoriqueMessages(message);
 					}
 				} catch (Exception e) {
-					Log.e("bg", "xmpp. !Exception!",e);
+					Log.e("bg", "xmpp. !Exception!", e);
 				}
 			}
 
-			Toast.makeText(context, comment, Toast.LENGTH_LONG).show();			
-			Log.i("bg", "onReceiveIntent xmpp comment: " + comment);			
+			Toast.makeText(context, comment, Toast.LENGTH_LONG).show();
+			Log.i("bg", "onReceiveIntent xmpp comment: " + comment);
 		}
 	}
 

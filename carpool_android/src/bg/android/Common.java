@@ -56,7 +56,6 @@ public class Common {
 
 	public static final int ACTION_HIDDEN = Menu.FIRST + 19;
 
-	
 	public static final int SHOW_ALL = 0;
 
 	public static final int SHOW_NOTHING = 1;
@@ -75,19 +74,16 @@ public class Common {
 
 	private static final int ACTIVITY_CREATE_ACTIVITY_goHome = 5;
 
-	
 	private int mode = Common.MODE_DEFAULT;
 
 	private int show = SHOW_ALL;
-	
-	public boolean connectingServer=true;
-	public boolean justCreated=true;
 
+	public boolean connectingServer = true;
+
+	public boolean justCreated = true;
 
 	private static Common instance = new Common();
 
-
-	
 	public Common() {
 	}
 
@@ -149,16 +145,13 @@ public class Common {
 				this.displayAbout(activity);
 				break;
 			case ACTION_EXIT:
-				Log.i("bg","!exit request from menu!");
+				Log.i("bg", "!exit request from menu!");
 				this.exit(activity);
 				break;
-			
-			
+
 		}
 		return true;
 	}
-
-	
 
 	private void exit(Activity activity) {
 		Log.i("bg", "exit byby ");
@@ -197,5 +190,4 @@ public class Common {
 		this.justCreated = justCreated;
 	}
 
-	
 }

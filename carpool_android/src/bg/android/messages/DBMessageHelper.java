@@ -11,19 +11,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class DBMessageHelper {
-	
-	private static final String TABLE_NAME="messagesBg";
 
-	private static final String DATABASE_CREATE = "create table "+TABLE_NAME+" (idMessage integer primary key autoincrement, " + "t text not null, prix text not null, destination text not null, idCar text not null, xmpp text not null);";
+	private static final String TABLE_NAME = "messagesBg";
+
+	private static final String DATABASE_CREATE = "create table " + TABLE_NAME + " (idMessage integer primary key autoincrement, " + "t text not null, prix text not null, destination text not null, idCar text not null, xmpp text not null);";
 
 	private static final String DATABASE_NAME = "data";
 
-	
 	private static final int DATABASE_VERSION = 1;
 
 	private SQLiteDatabase ddataBase;
 
-	
 	public DBMessageHelper() {
 
 	}
@@ -32,7 +30,7 @@ public class DBMessageHelper {
 		try {
 			try {
 				Log.i("bg", "initDBMessageHelper");
-				if (ddataBase == null) {				
+				if (ddataBase == null) {
 					ddataBase = ctx.openDatabase(DATABASE_NAME, null);
 					Log.i("bg", "initDBMessageHelper openDataBAse done");
 				}
@@ -42,7 +40,7 @@ public class DBMessageHelper {
 				Log.i("bg", "initDBMessageHelper  " + DATABASE_CREATE);
 				ddataBase.execSQL(DATABASE_CREATE);
 			}
-			
+
 		} catch (Exception e1) {
 			Log.i("bg", "initDB fail to initDB", e1);
 			ddataBase = null;
@@ -63,14 +61,14 @@ public class DBMessageHelper {
 		ddataBase.insert(TABLE_NAME, null, contentValues);
 	}
 
-	public void deleteMessage(long idMessage) { 
+	public void deleteMessage(long idMessage) {
 		ddataBase.delete(TABLE_NAME, "idMessage=" + idMessage, null);
 	}
 
-	private static String[] COLUMNS = new String[] { "idMessage", "t", "prix", "destination", "idCar","xmpp" };
+	private static String[] COLUMNS = new String[] { "idMessage", "t", "prix", "destination", "idCar", "xmpp" };
 
 	public List<Message> fetchAllMessages() {
-		
+
 		ArrayList<Message> listMessages = new ArrayList<Message>();
 		try {
 			Cursor c = ddataBase.query(TABLE_NAME, COLUMNS, null, null, null, null, null);
@@ -113,5 +111,4 @@ public class DBMessageHelper {
 		return ddataBase;
 	}
 
-	
 }

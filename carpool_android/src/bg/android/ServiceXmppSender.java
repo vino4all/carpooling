@@ -14,7 +14,6 @@ import com.google.android.gtalkservice.IGTalkService;
 import com.google.android.gtalkservice.IGTalkSession;
 import com.google.android.gtalkservice.Presence;
 
-
 public class ServiceXmppSender extends Service {
 
 	private IGTalkSession xmppSession = null;
@@ -29,7 +28,7 @@ public class ServiceXmppSender extends Service {
 			IGTalkService xmppService = IGTalkService.Stub.asInterface(service);
 			try {
 				xmppSession = xmppService.getDefaultSession();
-				//setXmppPresence();
+				// setXmppPresence();
 				setXmppAdress();
 			} catch (Exception ex) {
 				Log.e("bg", "ActivityDetail caught ", ex);
@@ -46,13 +45,13 @@ public class ServiceXmppSender extends Service {
 	public ServiceXmppSender() {
 		super();
 		instance = this;
-		Log.w("bg4", "ServicesXmpp.constructeur "+instance);
+		Log.w("bg4", "ServicesXmpp.constructeur " + instance);
 	}
 
 	@Override
 	protected void onCreate() {
 		super.onCreate();
-		bindService((new Intent()).setComponent(com.google.android.gtalkservice.GTalkServiceConstants.GTALK_SERVICE_COMPONENT),  mConnection, 0);
+		bindService((new Intent()).setComponent(com.google.android.gtalkservice.GTalkServiceConstants.GTALK_SERVICE_COMPONENT), mConnection, 0);
 
 		Log.w("bg4", "ServicesXmpp.oncreate  " + xmppSession);
 	}
@@ -80,7 +79,7 @@ public class ServiceXmppSender extends Service {
 				Log.e("bg4", "No set xmpp presence !");
 			} else if (xmppSession == null) {
 			} else {
-				
+
 				xmppSession.setPresence(new Presence(Im.PresenceColumns.AVAILABLE, "Am here now!"));
 			}
 		} catch (Exception e) {
@@ -102,8 +101,8 @@ public class ServiceXmppSender extends Service {
 	}
 
 	public static ServiceXmppSender getInstance() {
-		if (instance == null){
-			Log.i("bg","ServiceXmppSender instance is null !");
+		if (instance == null) {
+			Log.i("bg", "ServiceXmppSender instance is null !");
 		}
 		return instance;
 	}
@@ -111,17 +110,17 @@ public class ServiceXmppSender extends Service {
 	public IGTalkSession getXmppSession() {
 		return xmppSession;
 	}
-	
+
 	public String getUserName() {
-		
+
 		try {
-			if (this.xmppSession==null){
+			if (this.xmppSession == null) {
 				return Preferences.getInstance().getXmppAdress();
 			}
-			Log.e("bg4","getUserName xmppSession.isConnected() : "+xmppSession.isConnected());
+			Log.e("bg4", "getUserName xmppSession.isConnected() : " + xmppSession.isConnected());
 			return this.xmppSession.getUsername();
 		} catch (Exception e) {
-			Log.e("bg4","EXception",e);
+			Log.e("bg4", "EXception", e);
 			return Preferences.getInstance().getXmppAdress();
 		}
 	}
@@ -131,16 +130,15 @@ public class ServiceXmppSender extends Service {
 		// TODO Auto-generated method stub
 		return this.mBinder;
 	}
-	
+
 	/**
-     * Class for clients to access.  Because we know this service always
-     * runs in the same process as its clients, we don't need to deal with
-     * IPC.
-     */
-    public class LocalBinder_bg extends Binder {
-    	ServiceXmppSender getService() {
-            return ServiceXmppSender.this;
-        }
-    }
+	 * Class for clients to access. Because we know this service always runs in
+	 * the same process as its clients, we don't need to deal with IPC.
+	 */
+	public class LocalBinder_bg extends Binder {
+		ServiceXmppSender getService() {
+			return ServiceXmppSender.this;
+		}
+	}
 
 }

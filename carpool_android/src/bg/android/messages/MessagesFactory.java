@@ -12,7 +12,6 @@ public class MessagesFactory {
 
 	private DBMessageHelper dbMessages;
 
-	
 	private static MessagesFactory instance = new MessagesFactory();
 
 	private boolean isDataBaseActived = false;
@@ -39,7 +38,7 @@ public class MessagesFactory {
 		}
 		if (isDataBaseActived) {
 			this.listMessages = this.dbMessages.fetchAllMessages();
-			Log.i("bg","lisMessages: "+this.listMessages.size());
+			Log.i("bg", "lisMessages: " + this.listMessages.size());
 		}
 	}
 
@@ -62,8 +61,8 @@ public class MessagesFactory {
 		return listMessages;
 	}
 
-	public  void onDestroy() {
-		if (this.isDataBaseActived){
+	public void onDestroy() {
+		if (this.isDataBaseActived) {
 			this.dbMessages.close();
 		}
 	}
@@ -71,12 +70,12 @@ public class MessagesFactory {
 	public void remove(Message message) {
 		try {
 			this.listMessages.remove(message);
-			if (isDataBaseActived){
+			if (isDataBaseActived) {
 				this.dbMessages.deleteMessage(message.getIdMessage());
 			}
 		} catch (Exception e) {
-			Log.i("bg","Exception Remove Message "+message,e);
-		}		
+			Log.i("bg", "Exception Remove Message " + message, e);
+		}
 	}
 
 }
