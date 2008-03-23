@@ -1,5 +1,7 @@
 package bg.android;
 
+import static bg.android.map.Overlay_Map.R_MOBILE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -8,10 +10,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.SubMenu;
 import android.view.Menu.Item;
-import android.view.WindowManager.LayoutParams;
 import bg.android.coVoiturage.Car;
 import bg.android.coVoiturage.CarsFactory;
 import bg.android.map.MapViewBg;
@@ -22,7 +22,6 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayController;
 import com.google.android.maps.Point;
-import static bg.android.map.Overlay_Map.R_MOBILE;
 
 public class ActivityMap extends MapActivity {
 	private MapView mMapView;
