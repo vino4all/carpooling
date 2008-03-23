@@ -7,16 +7,17 @@ import android.util.Log;
 import com.google.android.maps.Point;
 
 public class Preferences {
-	private boolean isInitialized=false;
+	private boolean isInitialized = false;
 
 	public static final int TYPE_UNKNOW = 0;
 
 	public static final int TYPE_AUTO_STOPPEUR = 1;
 
 	public static final int TYPE_VOITURE = 2;
-	
-	public static final int LOCALIZATOR_GPS=0;
-	public static final int LOCALIZATOR_MAP=1;
+
+	public static final int LOCALIZATOR_GPS = 0;
+
+	public static final int LOCALIZATOR_MAP = 1;
 
 	public static final String PREFERENCES_NAME = "bgMap";
 
@@ -38,16 +39,13 @@ public class Preferences {
 
 	private String prix = "";
 
-	
-	private String xmppAdress="";
+	private String xmppAdress = "";
 
 	private static Preferences instance;
-	
+
 	private boolean isHidden = true;
-	
-	private int localizator=0;
 
-
+	private int localizator = 0;
 
 	private Preferences() {
 		instance = this;
@@ -66,7 +64,7 @@ public class Preferences {
 	}
 
 	public void init(ApplicationContext aContext) {
-		if (isInitialized){
+		if (isInitialized) {
 			return;
 		}
 		try {
@@ -83,13 +81,13 @@ public class Preferences {
 			this.destination = settings.getString("destination", "");
 			this.prix = settings.getString("prix", "");
 			this.xmppAdress = settings.getString("xmppAdress", "");
-			this.isHidden=settings.getBoolean("isHidden", false);
-			this.localizator=settings.getInt("localizator", 0);
-			isInitialized=true;
+			this.isHidden = settings.getBoolean("isHidden", false);
+			this.localizator = settings.getInt("localizator", 0);
+			isInitialized = true;
 		} catch (Exception e) {
-			Log.e("bg", "Exception Preference init",e);
+			Log.e("bg", "Exception Preference init", e);
 		}
-		Log.i("bg", "init prferences done : "+this.toString());
+		Log.i("bg", "init prferences done : " + this.toString());
 	}
 
 	public void setType(ApplicationContext aContext, int type_) {
@@ -124,9 +122,8 @@ public class Preferences {
 		editor.commit();
 	}
 
-	
 	public void setLocalizator(ApplicationContext aContext, int localizator_) {
-		this.localizator=localizator_;
+		this.localizator = localizator_;
 		put(aContext, "localizator", this.localizator);
 	}
 
@@ -175,7 +172,7 @@ public class Preferences {
 	}
 
 	public String toString() {
-		return "Preferences name: " + this.name + "  dest: " + this.destination + "  prix:" + this.prix + " latitude: " + this.myLocation.getLatitudeE6() + "  longitude: " + this.myLocation.getLongitudeE6()+" xmppAdress: "+this.xmppAdress;
+		return "Preferences name: " + this.name + "  dest: " + this.destination + "  prix:" + this.prix + " latitude: " + this.myLocation.getLatitudeE6() + "  longitude: " + this.myLocation.getLongitudeE6() + " xmppAdress: " + this.xmppAdress;
 	}
 
 	private void putString(ApplicationContext aContext, String key, String value) {
@@ -210,13 +207,6 @@ public class Preferences {
 		editor.commit();
 	}
 
-	
-
-
-
-
-	
-
 	public boolean isInsideMapSpan(int latitudeE6, int longitudeE6) {
 		if (this.centreEcran == null) {
 			Log.w("bg", "centreEcran is null!");
@@ -246,17 +236,11 @@ public class Preferences {
 		this.longitudeSpan = longitudeSpan;
 	}
 
-
-
-	
-
 	public String getXmppAdress() {
 		return this.xmppAdress;
 	}
 
-	
-	
-	public void setXmppAdress(ApplicationContext aContext,String myXmppAdress) {
+	public void setXmppAdress(ApplicationContext aContext, String myXmppAdress) {
 		this.xmppAdress = myXmppAdress;
 		this.putString(aContext, "xmppAdress", myXmppAdress);
 	}
@@ -265,23 +249,22 @@ public class Preferences {
 		return isHidden;
 	}
 
-	public void setHidden(ApplicationContext aContext,boolean isHidden) {
+	public void setHidden(ApplicationContext aContext, boolean isHidden) {
 		this.isHidden = isHidden;
 		this.putBoolean(aContext, "isHidden", isHidden);
 	}
-	
+
 	public void setHidden_flipflop(ApplicationContext aContext) {
 		this.isHidden = !this.isHidden;
 		this.putBoolean(aContext, "isHidden", isHidden);
 	}
 
 	public boolean isLocateByGPS() {
-		return this.localizator==LOCALIZATOR_GPS;
-	}
-	
-	public boolean isLocateByMAP() {
-		return this.localizator==LOCALIZATOR_MAP;
+		return this.localizator == LOCALIZATOR_GPS;
 	}
 
-	
+	public boolean isLocateByMAP() {
+		return this.localizator == LOCALIZATOR_MAP;
+	}
+
 }

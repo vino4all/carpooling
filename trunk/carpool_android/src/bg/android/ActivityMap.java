@@ -218,8 +218,8 @@ public class ActivityMap extends MapActivity {
 		CarsFactory.getInstance(this).selectNext2();
 		this.repaintMap_();
 	}
-	
-	public void selectCar(Car carSelected){
+
+	public void selectCar(Car carSelected) {
 		CarsFactory.getInstance(this).selectCar(carSelected);
 		this.repaintMap_();
 	}
@@ -287,7 +287,6 @@ public class ActivityMap extends MapActivity {
 		}
 	}
 
-
 	public MapView getMapView() {
 		return mMapView;
 	}
@@ -304,18 +303,16 @@ public class ActivityMap extends MapActivity {
 		this.listCarDisplayed = listCarDisplayed;
 	}
 
-
 	public Car getCarClicked(int x, int y) {
-		MapView m =this.getMapView();
 		for (Car car : this.listCarDisplayed) {
 			int xCar = car.getX_screen();
 			int yCar = car.getY_screen();
-			int xx = x ;
-			int yy = y ;
+			int xx = x;
+			int yy = y;
 			int dX = Math.abs(xx - xCar);
 			int dY = Math.abs(yy - yCar);
-			Log.i("bg"," x :"+x+"  xx:"+xx+" xCar:"+xCar+" dX:"+dX+" :: y:"+y+" yy:"+yy+" yCar:"+yCar+" dY:"+dY);
-			if ((dX <=(2*R_MOBILE)) && (dY <=(2*R_MOBILE))){
+			Log.i("bg", " x :" + x + "  xx:" + xx + " xCar:" + xCar + " dX:" + dX + " :: y:" + y + " yy:" + yy + " yCar:" + yCar + " dY:" + dY);
+			if ((dX <= (2 * R_MOBILE)) && (dY <= (2 * R_MOBILE))) {
 				return car;
 			}
 		}

@@ -34,14 +34,13 @@ public class CarsFactory implements Runnable {
 
 	public static final String UserAgent = "Android.bg.1";
 
-	
 	private ActivityMap activityMap;
 
 	private static CarsFactory instance = new CarsFactory();
 
 	private String urlStr_ = "http://dev.java-consultant.com/bgAndroid/service";
 
-	private  SortedSet<Car> listCars = new TreeSet<Car>();
+	private SortedSet<Car> listCars = new TreeSet<Car>();
 
 	private static final String ACTION_SetLocalization = "SetLocalization";
 
@@ -68,8 +67,6 @@ public class CarsFactory implements Runnable {
 		}
 	}
 
-	
-
 	public static CarsFactory getInstance() {
 		return instance;
 	}
@@ -83,7 +80,7 @@ public class CarsFactory implements Runnable {
 		// TODO Auto-generated method stub
 		return instance;
 	}
-
+	@SuppressWarnings("deprecation")
 	public void sendMessage(String message) {
 		message = URLEncoder.encode(message);
 		String urlStr_ = getUrlRequesAction(ACTION_sendMessage, "&message=" + message);
@@ -96,6 +93,7 @@ public class CarsFactory implements Runnable {
 		wsRequestToURL(urlStr_);
 	}
 
+	@SuppressWarnings("deprecation")
 	private String getUrlRequesAction(String action, String args) {
 		Common.getInstance().setConnectingServer(true);
 		Preferences p = Preferences.getInstance();
@@ -122,17 +120,17 @@ public class CarsFactory implements Runnable {
 		String xmpp = null;
 		ServiceXmppSender sXmppSender = ServiceXmppSender.getInstance();
 		if (sXmppSender == null) {
-			xmpp =  Preferences.getInstance().getXmppAdress();
+			xmpp = Preferences.getInstance().getXmppAdress();
 		} else {
-			xmpp =  sXmppSender.getUserName();
+			xmpp = sXmppSender.getUserName();
 		}
-		Log.i("bg","xmpp: "+xmpp);
-		if (xmpp==null){			
-		}else if (xmpp.length()==0){			
-		}else {
+		Log.i("bg", "xmpp: " + xmpp);
+		if (xmpp == null) {
+		} else if (xmpp.length() == 0) {
+		} else {
 			r += "&xmppAdress=" + xmpp;
 		}
-		
+
 		r += "&telephone=" + getTelephone();
 		r += args;
 		return urlStr_ + r;
@@ -184,15 +182,15 @@ public class CarsFactory implements Runnable {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			doc = db.parse(urlConn.getInputStream());
-			
+
 			parseXml(doc);
 		} catch (Exception ioe) {
-			
+
 			Log.i("bg", "wsRequest 2", ioe);
 		}
 		Log.i("bg", "wsRequest: done ");
 		Common.getInstance().setConnectingServer(false);
-		
+
 	}
 
 	protected void parseXml(Document doc) {
@@ -212,15 +210,16 @@ public class CarsFactory implements Runnable {
 			Log.i("bg", " car :::::" + car);
 			listCarPersistent.add(car);
 		}
-		
-		this.listCars=listCarPersistent;
+
+		this.listCars = listCarPersistent;
 		updateListener();
 	}
+
 	public Car getCarById(String idAndroid) {
-		return this.getCarById(this.listCars,idAndroid);
+		return this.getCarById(this.listCars, idAndroid);
 	}
 
-	public Car getCarById(SortedSet<Car> list_ ,String idAndroid) {
+	public Car getCarById(SortedSet<Car> list_, String idAndroid) {
 		if (idAndroid == null) {
 			return null;
 		}
@@ -255,13 +254,11 @@ public class CarsFactory implements Runnable {
 		}
 	}
 
-	
-
 	public List<Car> getListCarsClone() {
 		List<Car> listClone = new ArrayList<Car>();
 		Iterator<Car> ite = this.listCars.iterator();
-		for(Car c : listCars) {
-			//java.
+		for (Car c : listCars) {
+			// java.
 			listClone.add(c);
 		}
 		return listClone;

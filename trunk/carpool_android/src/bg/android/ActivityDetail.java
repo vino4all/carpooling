@@ -1,8 +1,5 @@
 package bg.android;
 
-
-
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,7 +21,6 @@ import android.widget.Toast;
 import bg.android.coVoiturage.Car;
 import bg.android.coVoiturage.CarsFactory;
 import bg.android.messages.MessagesFactory;
-
 
 public class ActivityDetail extends Activity implements OnClickListener {
 
@@ -48,7 +44,7 @@ public class ActivityDetail extends Activity implements OnClickListener {
 
 	private TextView textView_detailXmpp;
 
-	//private ImageView imageViewAndroid;
+	// private ImageView imageViewAndroid;
 
 	private ImageView imageViewType;
 
@@ -58,9 +54,8 @@ public class ActivityDetail extends Activity implements OnClickListener {
 
 	private Bitmap bitMapTypeUnknow;
 
-	
-	private String prixLabel="Price";
-	
+	private String prixLabel = "Price";
+
 	private String labelHistoriqueMessages;
 
 	// private IXmppSession mXmppSession = null;
@@ -70,9 +65,6 @@ public class ActivityDetail extends Activity implements OnClickListener {
 	}
 
 	// private boolean xmppAvailable = false;
-
-
-	
 
 	/** Called when the activity is first created. */
 	@Override
@@ -85,7 +77,9 @@ public class ActivityDetail extends Activity implements OnClickListener {
 			this.car = CarsFactory.getInstance(this).selectNext2();
 		}
 		setContentView(R.layout.activity_detail);
-		//bindService((new Intent()).setComponent(com.google.android.xmppService.XmppConstants.XMPP_SERVICE_COMPONENT), null, mConnection, 0);
+		// bindService((new
+		// Intent()).setComponent(com.google.android.xmppService.XmppConstants.XMPP_SERVICE_COMPONENT),
+		// null, mConnection, 0);
 		((Button) findViewById(R.id.detailMap)).setOnClickListener(this);
 		((Button) findViewById(R.id.detailNext)).setOnClickListener(this);
 		((Button) findViewById(R.id.detailPrevious)).setOnClickListener(this);
@@ -115,11 +109,15 @@ public class ActivityDetail extends Activity implements OnClickListener {
 		this.bitMapTypePassager = BitmapFactory.decodeResource(this.getResources(), R.drawable.type_pingouin);
 		this.bitMapTypeUnknow = BitmapFactory.decodeResource(this.getResources(), R.drawable.type_unknown);
 
-		//this.bitMapAndroid = BitmapFactory.decodeResource(this.getResources(), R.drawable.ua_android);
-		//this.bitMapAndroidNo = BitmapFactory.decodeResource(this.getResources(), R.drawable.ua_no_android);
+		// this.bitMapAndroid =
+		// BitmapFactory.decodeResource(this.getResources(),
+		// R.drawable.ua_android);
+		// this.bitMapAndroidNo =
+		// BitmapFactory.decodeResource(this.getResources(),
+		// R.drawable.ua_no_android);
 
-		this.prixLabel= ""+this.getText(R.string.detail_prixLabel);
-        this.labelHistoriqueMessages=""+this.getText(R.string.detail_labelHistoriqueMessages);
+		this.prixLabel = "" + this.getText(R.string.detail_prixLabel);
+		this.labelHistoriqueMessages = "" + this.getText(R.string.detail_labelHistoriqueMessages);
 		updateCar();
 	}
 
@@ -153,11 +151,11 @@ public class ActivityDetail extends Activity implements OnClickListener {
 			this.imageViewType.setImageBitmap(this.bitMapTypeUnknow);
 			return;
 		}
-		
+
 		textView_detailTittle.setText(this.getDetailTitleStr_(car));
-		textView_detailName.setText(car.getName() );
+		textView_detailName.setText(car.getName());
 		textView_detailHidden.setText(" " + car.isHidenStr());
-		textView_detailPrix.setText(prixLabel +" : "+ car.getPrix());
+		textView_detailPrix.setText(prixLabel + " : " + car.getPrix());
 		textView_detailTelephone.setText(car.getTel());
 		textView_detailDestination.setText("Destination : " + car.getDestination());
 		textView_HistoriqueMessages.setText(this.getHistoriquesMessages());
@@ -171,20 +169,19 @@ public class ActivityDetail extends Activity implements OnClickListener {
 			this.imageViewType.setImageBitmap(this.bitMapTypeUnknow);
 		}
 
-		
 	}
-	
+
 	public int getDetailTitleStr_(Car car) {
-		if (car.isTypeUnknow()){
+		if (car.isTypeUnknow()) {
 			return R.string.detail_t_unknow;
 		}
-		if (car.isTypeCar()){
+		if (car.isTypeCar()) {
 			return R.string.detail_t_voiture_cherche_passager;
 		}
-		if (car.isTypeAutostoppeur()){
+		if (car.isTypeAutostoppeur()) {
 			return R.string.detail_t_passager_cherche_vehicule;
 		}
-		return  R.string.detail_t_strange;
+		return R.string.detail_t_strange;
 	}
 
 	private void telephone() {
@@ -204,9 +201,9 @@ public class ActivityDetail extends Activity implements OnClickListener {
 		this.setTitle("xmpp");
 		try {
 			String text = "" + this.editText.getText();
-			//com.google.android.gtalkservice.IGTalkSession
+			// com.google.android.gtalkservice.IGTalkSession
 			com.google.android.gtalkservice.IGTalkSession xmppSession = ServiceXmppSender.getInstance().getXmppSession();
-			
+
 			if (xmppSession == null) {
 				logPopupMessage(" No xmpp session connected ");
 			} else if (text.trim().length() == 0) {
@@ -228,14 +225,14 @@ public class ActivityDetail extends Activity implements OnClickListener {
 				this.textView_HistoriqueMessages.setText(this.getHistoriquesMessages());
 				this.editText.setText("");
 				Log.i("bg", "Message sent to " + this.car.getXmppAdress());
-				logPopupMessage("Message sent to:"+xmppAdress+"  text: "+text);
+				logPopupMessage("Message sent to:" + xmppAdress + "  text: " + text);
 			}
 		} catch (Exception e) {
 			Log.i("bg", "sendXmpp", e);
 			logPopupMessage("ERROR xmpp ");
 		}
 	}
-	
+
 	private String getHistoriquesMessages() {
 		return this.car.getHistoriqueMessages(this.labelHistoriqueMessages);
 	}
@@ -249,11 +246,9 @@ public class ActivityDetail extends Activity implements OnClickListener {
 		try {
 			Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 		} catch (Exception e) {
-			Log.e("bg","logPOpup Excption",e);
+			Log.e("bg", "logPOpup Excption", e);
 		}
 	}
-	
-	
 
 	private Intent getIntentToSend(String text, String destination, String prix) {
 		Intent intent = new Intent(BgXmppDataMessageReceiver2.ACTION);

@@ -32,14 +32,13 @@ public class Overlay_Map extends Overlay {
 	private Bitmap bitmap_unknown;
 
 	private Bitmap bitmap_isActif_NO;
-	
-	public static final int R_MOBILE=7;
+
+	public static final int R_MOBILE = 7;
 
 	private ActivityMap map;
 
 	Paint paint1 = new Paint();
-	
-	
+
 	public Overlay_Map(ActivityMap map) {
 		super();
 		this.map = map;
@@ -88,7 +87,7 @@ public class Overlay_Map extends Overlay {
 		int show = Common.getInstance().getShow();
 		paint1.setStyle(Style.FILL);
 		List<Car> listCarDisplayed = new ArrayList<Car>();
-		
+
 		while (iteCar.hasNext()) {
 			Car car_ = iteCar.next();
 			int latitude = car_.getLatitude();
@@ -265,8 +264,9 @@ public class Overlay_Map extends Overlay {
 			String text_connecting = "" + this.map.getText(R.string.map_message_connectingServer);
 			draw_comment(canvas, x, y, text_connecting);
 			y = y + 40;
-			//String text_zoom = "" + this.map.getText(R.string.map_message_zoom_plus);
-			//draw_comment(canvas, x, y, text_zoom);
+			// String text_zoom = "" +
+			// this.map.getText(R.string.map_message_zoom_plus);
+			// draw_comment(canvas, x, y, text_zoom);
 		}
 	}
 
@@ -284,5 +284,4 @@ public class Overlay_Map extends Overlay {
 		paint1.setTextSize(fSize);
 	}
 
-	
 }

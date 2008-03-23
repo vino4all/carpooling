@@ -138,7 +138,7 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 	@Override
 	public void onClick(View view) {
 		this.saveParams();
-		if (!this.mandatoryFieldAreOK()){
+		if (!this.mandatoryFieldAreOK()) {
 			this.dialogShow();
 			return;
 		}
@@ -165,8 +165,6 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 
 		}
 	}
-	
-
 
 	private void displayMap_SHOW_MOBILES() {
 		Common.getInstance().setMode(Common.MODE_SHOW_MOBILES);
@@ -248,12 +246,12 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 		super.onDestroy();
 		MessagesFactory.getInstance().onDestroy();
 	}
-	
+
 	private boolean mandatoryFieldAreOK() {
-		if (this.editText_myName.getText().length()<=0){
+		if (this.editText_myName.getText().length() <= 0) {
 			return false;
 		}
-		if (this.editText_myDestination.getText().length()<=0){
+		if (this.editText_myDestination.getText().length() <= 0) {
 			return false;
 		}
 		return true;

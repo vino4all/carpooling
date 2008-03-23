@@ -9,17 +9,19 @@ import org.w3c.dom.Element;
 import bg.android.Preferences;
 import bg.android.messages.Message;
 
-public class Car implements Comparable<Car>{
+public class Car implements Comparable<Car> {
 
-	// <car id="1234" latitude="123455" longitude="12345" destination="toulouse" prix="123" xmmppAdress="bertrand2@gmail.com" tel="0682426361" />
+	// <car id="1234" latitude="123455" longitude="12345" destination="toulouse"
+	// prix="123" xmmppAdress="bertrand2@gmail.com" tel="0682426361" />
 
 	public static final int TYPE_UNKNOW = 0;
 
 	public static final int TYPE_AUTO_STOPPEUR = 1;
 
 	public static final int TYPE_VOITURE = 2;
+
 	private String idAndroid;
-	
+
 	private String name;
 
 	private int latitudeE6;
@@ -28,28 +30,30 @@ public class Car implements Comparable<Car>{
 
 	private String destination;
 
-	private String prix ="";
+	private String prix = "";
 
 	private String xmppAdress;
 
 	private String tel;
-	
-	private boolean selected=false;
-	
-	private int type=0;
-	
-	private boolean isPersistant=false;
-	
-	private boolean isHiden=false;
-	
+
+	private boolean selected = false;
+
+	private int type = 0;
+
+	private boolean isPersistant = false;
+
+	private boolean isHiden = false;
+
 	private int x_screen;
+
 	private int y_screen;
-	
-	private List<Message> listMessages = new ArrayList<Message>(); 
+
+	private List<Message> listMessages = new ArrayList<Message>();
+
 	/**
 	 * User-Agent
 	 */
-	private String ua="";
+	private String ua = "";
 
 	public Car() {
 		super();
@@ -58,19 +62,19 @@ public class Car implements Comparable<Car>{
 	public void update(Element elementCar) {
 		this.idAndroid = elementCar.getAttribute("idAndroid");
 		this.destination = elementCar.getAttribute("destination");
-		this.ua = elementCar.getAttribute("ua");		
-		this.latitudeE6= getElementAttributAsInt(elementCar,"latitudeE6");
-		this.longitudeE6= getElementAttributAsInt(elementCar,"longitudeE6");
-		this.prix= elementCar.getAttribute("prix");
-		this.xmppAdress= elementCar.getAttribute("xmppAdress");
-		this.tel= elementCar.getAttribute("tel");
-		this.name= elementCar.getAttribute("name");
+		this.ua = elementCar.getAttribute("ua");
+		this.latitudeE6 = getElementAttributAsInt(elementCar, "latitudeE6");
+		this.longitudeE6 = getElementAttributAsInt(elementCar, "longitudeE6");
+		this.prix = elementCar.getAttribute("prix");
+		this.xmppAdress = elementCar.getAttribute("xmppAdress");
+		this.tel = elementCar.getAttribute("tel");
+		this.name = elementCar.getAttribute("name");
 		String typeStr = elementCar.getAttribute("type");
 		this.type = parseInt(typeStr, 0);
 	}
-	
-	private int parseInt(String s, int d){
-		if (s == null){
+
+	private int parseInt(String s, int d) {
+		if (s == null) {
 			return d;
 		}
 		try {
@@ -79,21 +83,21 @@ public class Car implements Comparable<Car>{
 			return d;
 		}
 	}
-	
-	private int getElementAttributAsInt(Element element, String tag){
+
+	private int getElementAttributAsInt(Element element, String tag) {
 		String s = element.getAttribute(tag);
-		if (s==null){
+		if (s == null) {
 			return 0;
-		}else if (s.length()==0){
+		} else if (s.length() == 0) {
 			return 0;
-		}else {
+		} else {
 			return Integer.parseInt(s.trim());
 		}
 	}
 
 	public String toString() {
-		//return " Car:" + id + "  " + xmppAdress + "  " + tel;
-		return " Car:  id:" + idAndroid +" name:"+name+" latitudeE6 :"+latitudeE6+" longitudeE6 : "+longitudeE6+"  destination:"+this.destination+"  prix:"+this.prix+"  isPersistant:"+isPersistant;
+		// return " Car:" + id + " " + xmppAdress + " " + tel;
+		return " Car:  id:" + idAndroid + " name:" + name + " latitudeE6 :" + latitudeE6 + " longitudeE6 : " + longitudeE6 + "  destination:" + this.destination + "  prix:" + this.prix + "  isPersistant:" + isPersistant;
 	}
 
 	public String getName() {
@@ -117,7 +121,7 @@ public class Car implements Comparable<Car>{
 	}
 
 	public String getTel() {
-		if (tel == null){
+		if (tel == null) {
 			return "";
 		}
 		return tel;
@@ -143,50 +147,42 @@ public class Car implements Comparable<Car>{
 		return type;
 	}
 
-	public boolean isTypeUnknow() {		
-		return this.type==TYPE_UNKNOW;
+	public boolean isTypeUnknow() {
+		return this.type == TYPE_UNKNOW;
 	}
 
 	public boolean isTypeCar() {
-		return this.type==TYPE_VOITURE;
+		return this.type == TYPE_VOITURE;
 	}
-	
-	
-	
 
 	public boolean isTypeAutostoppeur() {
-		return this.type==TYPE_AUTO_STOPPEUR;
+		return this.type == TYPE_AUTO_STOPPEUR;
 	}
 
 	public String getTypeStr_____() {
-		if (isTypeUnknow()){
+		if (isTypeUnknow()) {
 			return "??";
 		}
-		if (isTypeCar()){
+		if (isTypeCar()) {
 			return "Voiture";
 		}
-		if (isTypeAutostoppeur()){
+		if (isTypeAutostoppeur()) {
 			return "Passager";
 		}
 		return "";
 	}
-	
-	
-	
+
 	public String getMapTittleStr() {
-		return  "  " + this.getName() + " : " + this.getPrix()+" to "+this.destination;		
+		return "  " + this.getName() + " : " + this.getPrix() + " to " + this.destination;
 	}
-	
-	
-	
 
 	@Override
-	public int compareTo(Car c) {		
-		return (c.getLongitude()-this.longitudeE6);
+	public int compareTo(Car c) {
+		return (c.getLongitude() - this.longitudeE6);
 	}
-	
+
 	public boolean isAndroid() {
-		if (this.ua==null){
+		if (this.ua == null) {
 			return false;
 		}
 		return this.ua.trim().equals(CarsFactory.UserAgent);
@@ -196,16 +192,15 @@ public class Car implements Comparable<Car>{
 		return isPersistant;
 	}
 
-	public String getHistoriqueMessages(String  labelNbDeMessages) {
-		String s = labelNbDeMessages+" : "+this.listMessages.size();
+	public String getHistoriqueMessages(String labelNbDeMessages) {
+		String s = labelNbDeMessages + " : " + this.listMessages.size();
 		Iterator<Message> ite = this.listMessages.iterator();
-		while(ite.hasNext()){
-			Message m =  ite.next();
-			s += "\n"+m.toStringDisplay();
+		while (ite.hasNext()) {
+			Message m = ite.next();
+			s += "\n" + m.toStringDisplay();
 		}
 		return s;
 	}
-	
 
 	public void addHistoriqueMessages(Message message) {
 		this.listMessages.add(message);
@@ -221,15 +216,15 @@ public class Car implements Comparable<Car>{
 
 	public void setHiden(boolean isHide_) {
 		this.isHiden = isHide_;
-		if (this.isHiden){
-			this.isPersistant=true;
+		if (this.isHiden) {
+			this.isPersistant = true;
 		}
 	}
 
 	public String isHidenStr() {
-		if (isHide()){
+		if (isHide()) {
 			return "Hidden";
-		}else {
+		} else {
 			return "";
 		}
 	}
@@ -274,5 +269,4 @@ public class Car implements Comparable<Car>{
 		this.x_screen = x_screen;
 	}
 
-	
 }
