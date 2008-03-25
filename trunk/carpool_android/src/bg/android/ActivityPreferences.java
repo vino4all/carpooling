@@ -6,22 +6,26 @@ import android.app.ApplicationContext;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyProperties;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Menu.Item;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import bg.android.coVoiturage.CarsFactory;
 import bg.android.messages.MessagesFactory;
 
 import com.google.android.maps.Point;
 
-public class ActivityPreferences extends Activity implements RadioGroup.OnCheckedChangeListener, OnClickListener {
+public class ActivityPreferences extends Activity implements RadioGroup.OnCheckedChangeListener, OnClickListener, OnCheckedChangeListener {
 
 	private RadioGroup radioGroup_type;
 
@@ -29,11 +33,14 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 
 	private RadioGroup radioGroup_localizator;
 
+	private CheckBox checkBoxPhoneNumberVisible;
 	private EditText editText_myName;
 
 	private EditText editText_myDestination;
 
 	private EditText editText_myPrix;
+	
+	private EditText editText_phoneNumber;
 
 	// private CheckBox checkBox_updateGPSPosition ;
 
@@ -64,12 +71,16 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 			buttonAbout.setOnClickListener(this);
 			Button buttonAbout2 = (Button) findViewById(R.id.appButtonAbout2);
 			buttonAbout2.setOnClickListener(this);
+			this.checkBoxPhoneNumberVisible  = (CheckBox) findViewById(R.id.appCheckBoxPhoneNumberVisible);
+			this.checkBoxPhoneNumberVisible.setOnCheckedChangeListener(this);
 			editText_myName = (EditText) findViewById(R.id.app_myName);
 			editText_myDestination = (EditText) findViewById(R.id.app_destination);
 			editText_myPrix = (EditText) findViewById(R.id.app_prix);
+			editText_phoneNumber = (EditText) findViewById(R.id.app_phone_number)  ; 
 			editText_myName.setText(p.getName());
 			editText_myDestination.setText(p.getDestination());
 			editText_myPrix.setText(p.getPrix());
+			editText_phoneNumber.setText(p.getPhoneNumber());
 			this.radioGroup_type = (RadioGroup) findViewById(R.id.menu_preferences);
 			this.radioGroup_type.setOnCheckedChangeListener(this);
 			this.radioGroup_hidden = (RadioGroup) findViewById(R.id.menu_hidden);
@@ -124,6 +135,10 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 			RadioButton rb = (RadioButton) findViewById(R.id.radio_group_2_hidden_false);
 			rb.setChecked(true);
 		}
+
+		boolean isPhoneNumberVisible = Preferences.getInstance().isPhoneNumberVisible();
+		EditText editTextPhoneNumber = (EditText) findViewById(R.id.app_phone_number);
+		editTextPhoneNumber.setEnabled(isPhoneNumberVisible);
 
 		boolean isLocateByGPS = Preferences.getInstance().isLocateByGPS();
 		if (isLocateByGPS) {
@@ -217,6 +232,7 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 		p.setDestination(this, "" + editText_myDestination.getText());
 		p.setName(this, "" + editText_myName.getText());
 		p.setPrix(this, "" + editText_myPrix.getText());
+		p.setPhoneNumber(this, ""+editText_phoneNumber.getText());
 
 	}
 
@@ -271,4 +287,13 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 		alertDialog.show();
 	}
 
+	@Override
+	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+		boolean isPhoneNumberVisible = this.checkBoxPhoneNumberVisible.isChecked();
+		Preferences.getInstance().setPhoneNumberVisible(this, isPhoneNumberVisible);
+		this.setType_and_hidden_and_localizator();
+	}
+
+	
+	
 }

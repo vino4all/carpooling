@@ -137,12 +137,7 @@ public class CarsFactory implements Runnable {
 	}
 
 	private String getTelephone() {
-		String tel = System.getProperty(TelephonyProperties.PROPERTY_LINE1_NUMBER);
-		if (tel == null) {
-			return "00000000";
-		}
-		return tel;
-
+		return Preferences.getInstance().getPhoneNumber();
 	}
 
 	/**
