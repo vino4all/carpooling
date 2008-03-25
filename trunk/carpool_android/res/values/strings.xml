@@ -13,6 +13,7 @@
     <string name="app_button_set_location_GPS">Refresh location by GPS</string>
     <string name="appButtonSuspend">Suspend</string>
     <string name="app_checkbox_set_location_GPS_refresh">update position by gps</string>
+    <string name="app_show_phone_number">Show phone number</string>
     
   
    <string name="buttonMap">map</string>
