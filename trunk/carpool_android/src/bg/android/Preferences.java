@@ -44,7 +44,8 @@ public class Preferences {
 	private static Preferences instance;
 
 	private boolean isHidden = true;
-
+	private boolean isPhoneNumberVisible = true;
+	private String phoneNumber="00000000";
 	private int localizator = 0;
 
 	private Preferences() {
@@ -83,6 +84,8 @@ public class Preferences {
 			this.xmppAdress = settings.getString("xmppAdress", "");
 			this.isHidden = settings.getBoolean("isHidden", false);
 			this.localizator = settings.getInt("localizator", 0);
+			this.phoneNumber = settings.getString("phoneNumber", "00000000");
+			this.isPhoneNumberVisible=settings.getBoolean("isPhoneNumberVisible", true);
 			isInitialized = true;
 		} catch (Exception e) {
 			Log.e("bg", "Exception Preference init", e);
@@ -265,6 +268,24 @@ public class Preferences {
 
 	public boolean isLocateByMAP() {
 		return this.localizator == LOCALIZATOR_MAP;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(ApplicationContext aContext,String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+		this.putString(aContext, "xmppAdress", phoneNumber);
+	}
+
+	public boolean isPhoneNumberVisible() {
+		return isPhoneNumberVisible;
+	}
+
+	public void setPhoneNumberVisible(ApplicationContext aContext,boolean isPhoneNumberVisible) {
+		this.isPhoneNumberVisible = isPhoneNumberVisible;
+		this.putBoolean(aContext, "isPhoneNumberVisible", isPhoneNumberVisible);
 	}
 
 }
