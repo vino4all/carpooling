@@ -80,6 +80,7 @@ public class CarsFactory implements Runnable {
 		// TODO Auto-generated method stub
 		return instance;
 	}
+
 	@SuppressWarnings("deprecation")
 	public void sendMessage(String message) {
 		message = URLEncoder.encode(message);
@@ -137,7 +138,11 @@ public class CarsFactory implements Runnable {
 	}
 
 	private String getTelephone() {
-		return Preferences.getInstance().getPhoneNumber();
+		if (Preferences.getInstance().isPhoneNumberVisible()) {
+			return Preferences.getInstance().getPhoneNumber();
+		} else {
+			return "00000000";
+		}
 	}
 
 	/**
