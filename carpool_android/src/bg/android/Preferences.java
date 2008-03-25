@@ -2,6 +2,7 @@ package bg.android;
 
 import android.app.ApplicationContext;
 import android.content.SharedPreferences;
+import android.telephony.TelephonyProperties;
 import android.util.Log;
 
 import com.google.android.maps.Point;
@@ -84,7 +85,7 @@ public class Preferences {
 			this.xmppAdress = settings.getString("xmppAdress", "");
 			this.isHidden = settings.getBoolean("isHidden", false);
 			this.localizator = settings.getInt("localizator", 0);
-			this.phoneNumber = settings.getString("phoneNumber", "00000000");
+			this.phoneNumber = settings.getString("phoneNumber", this.getSystemTelephone());
 			this.isPhoneNumberVisible=settings.getBoolean("isPhoneNumberVisible", true);
 			isInitialized = true;
 		} catch (Exception e) {
@@ -288,4 +289,12 @@ public class Preferences {
 		this.putBoolean(aContext, "isPhoneNumberVisible", isPhoneNumberVisible);
 	}
 
+	private static String getSystemTelephone() {
+		String tel = System.getProperty(TelephonyProperties.PROPERTY_LINE1_NUMBER);
+		if (tel == null) {
+			return "00000000";
+		}
+		return tel;
+
+	}
 }
