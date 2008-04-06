@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Car Pool </title>
+<style type="text/css">
+
+
+BODY { font-family: Arial; font-size: small;
+background-color: #CCCCFF;border-style: solid ; border: solid 10px green ;  }
+
+A:hover {color: red; text-decoration: underline; }
+
+
+</style>
+
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+var SymRealWinOpen = window.open;
+
+function SymWinOpen(url, name, attributes)
+{
+  return (new Object());
+}
+
+window.open = SymWinOpen;
+
+//-->
+</script>
+
+<script 
+
+src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAYxpy0HiKBWXiyhVrpVqkshTWg_xmhpETXrjHUj59zHLsinrq_xSAmAGIHF6kJpo3mJn5WnKDztG7kw"type="text/javascript">
+</script>
+</head>
+<body onunload="GUnload()"  style="border: solid 0px green ;">
+
+<div id="forehead" style="width: 550px; height: 40px">
+<h2>Car Pool</h2>
+
+
+</div>
+
+<div id="novel" style=" text-align:left">
+
+
+<h3> Position clicked </h3>
+<div id="debug"> </div>
+
+<div id="debug0"> -</div>
+<div id="debug1"> -</div>
+<div id="debug2"> -</div>
+<div id="debug3"> -</div>
+<div id="debug4"> -</div>
+<div id="debug5"> -</div>
+<div id="debug6"> -</div>
+<div id="debug7"> -</div>
+<div id="debug8"> -</div>
+<div id="debug9"> -</div>
+
+
+<input type="hidden" id="urlServer" style="width:280px;" name="pos" value="http://dev.java-consultant.com/bgAndroid" />
+
+
+<br/>
+<input type="submit" id="testBg1" style="width:280px;" name="tzstBg" value="refresh" onclick="getCars()" />
+
+<table>
+
+<tr> <td>name: </td> <td> <input type="text" id="name" style="width:280px;" name="name" value="bertrand"/></td> </tr>
+<tr> <td>telephone: </td> <td> <input type="text" id="telephone" style="width:280px;" name="telephone" value="0682426361"/></td> </tr>
+<tr> <td>xmppAdress: </td> <td> <input type="text" id="xmppAdress" style="width:280px;" name="xmppAdress" value="bertrand.guiral@gmail.com"/></td> </tr>
+<tr> <td> price:</td> <td> <input type="text" id="prix" style="width:280px;" name="prix" value="100 Euros"/> </td> </tr>
+<tr> <td> destination: </td> <td> <input type="text" id="destination" style="width:280px;" name="destination" value="Monbassa"/></td> </tr>
+<tr> <td> type: </td> <td><radiogroup id="type">
+						  <input type="radio" id="type0"  name="type" value="0" />unknown
+                          <br/><input type="radio" id="type1"  name="type" value="1" />People
+                          <br/><input type="radio" id="type2"  name="type" value="2" />Car
+                          </radiogroup id="group1">
+                                                                                        </td> </tr>
+</table>
+
+
+
+
+<br/>
+
+
+
+
+
+<div id="map" style="width:512px; height:400px"></div>
+<br/><br/>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+var map = new GMap2(document.getElementById("map"));
+map.addControl(new GMapTypeControl(1));
+map.addControl(new GLargeMapControl());
+var myPosition = new GLatLng(65,25);
+map.setCenter(myPosition, 4);
+
+var blueIcon = new GIcon(G_DEFAULT_ICON);
+blueIcon.image = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
+
+var markerMyPosition = new GMarker(myPosition);
+var markerMobilesArray = new Array();
+map.addOverlay(markerMyPosition);
+var lastPoint;
+
+GEvent.addListener(map, "mousemove", function(point){lastPoint = point;});
+
+
+GEvent.addListener(map, "click", function(){
+  try{
+	document.getElementById("debug1").innerHTML="debug1::"+lastPoint;
+	var options = { title: 'azerty',icon:blueIcon };
+	var markerMyPositionNew = new GMarker(lastPoint,options);
+	myPosition = lastPoint;
+	map.removeOverlay(markerMyPosition);	
+	document.getElementById("debug5").innerHTML="debug5::";
+	markerMyPosition=markerMyPositionNew;
+	map.addOverlay(markerMyPosition);
+	
+	//getCars();
+  }catch(e){
+   document.getElementById("debug4").innerHTML="debug4  ::"+e;
+  }
+});
+/////Marker and info window
+
+
+
+
+
+/////////Mousemove////////////////
+
+
+function getCars() {
+ 	document.getElementById('debug').innerHTML = 'refresh start';
+ 	var xhr = getXmlHttpRequest();
+ 	var center = map.getCenter();
+ 	var latitudeE6 =  (myPosition.lat().toFixed(6)*1000000);
+ 	var longitudeE6 = (myPosition.lng().toFixed(6)*1000000);
+ 	var latitudeMapCenter = (center.lat().toFixed(6)*1000000);
+ 	var longitudeMapCenter = (center.lng().toFixed(6)*1000000);
+ 	var n_cars=0;
+ 	
+ 	
+ 	 try {
+ 	    var bounds =  map.getBounds();
+ 	    var southWest = bounds.getSouthWest();  
+ 	    var northEast = bounds.getNorthEast();  
+ 	    var lngSpanE6 = ((northEast.lng().toFixed(6) - southWest.lng().toFixed(6))*1000000)|0; 
+ 	    var latSpanE6 = ((northEast.lat().toFixed(6) - southWest.lat().toFixed(6))*1000000)|0;
+ 	 }catch(e) { 	 	
+ 	    document.getElementById("debug").innerHTML="debug::"+e;
+ 	 }
+ 	 
+	var urlBg = document.getElementById("urlServer").value+"/service?action=getCars&debug=js";
+	urlBg += "&latitudeE6="+latitudeE6+"&longitudeE6="+longitudeE6;
+	urlBg += "&latitudeMapCenter="+latitudeE6+"&longitudeMapCenter="+longitudeE6;
+	urlBg += "&latitudeSpan="+latSpanE6+"&longitudeSpan="+lngSpanE6;
+	urlBg += "&name="+document.getElementById("name").value;
+	urlBg += "&telephone="+document.getElementById("telephone").value;
+	urlBg += "&xmppAdress="+document.getElementById("xmppAdress").value;
+	urlBg += "&destination="+document.getElementById("destination").value;
+	urlBg += "&prix="+document.getElementById("prix").value;
+	
+	if (document.getElementById("type0").checked){
+		urlBg+="&type=0";
+	}
+	if (document.getElementById("type1").checked){
+		urlBg+="&type=1";
+	}
+	if (document.getElementById("type2").checked){
+		urlBg+="&type=2";
+	}
+	xhr.onreadystatechange = function(){	  
+					try {
+					  if(xhr.readyState == 4 && xhr.status == 200){	
+					     removeMarkers() ;
+					     var markersNewArray = new Array();				
+						 var message_nodes_new = xhr.responseXML.getElementsByTagName("car");
+ 						 n_cars = message_nodes_new.length;
+ 						 var s=""; 	
+ 						 var markerMobilesArrayLocal = new Array();					 
+ 						 for (i = 0; i < n_cars; i++) {
+ 						    var latitude = message_nodes_new[i].getAttribute("latitudeE6") /1000000;
+						    var longitude = message_nodes_new[i].getAttribute("longitudeE6") /1000000;
+						    var destination = message_nodes_new[i].getAttribute("destination");
+						    var name = message_nodes_new[i].getAttribute("name");
+						    s+="<br> car: "+i+"  name: "+name+"  destination "+destination+"  latitude:"+latitude+" longitude:"+longitude;
+						    var g = new GLatLng(latitude,longitude);
+						    var marker2 = new GMarker(g);
+						    markerMobilesArrayLocal[i]=marker2;
+							map.addOverlay(marker2);							
+						 } 
+						 markerMobilesArray=markerMobilesArrayLocal;
+						 document.getElementById('debug').innerHTML = 'refresh response nb Mobiles: '+n_cars;
+					  }
+					}catch(e){
+						document.getElementById("debug").innerHTML="debug7 ::: Exception "+e;
+					}
+					
+	};
+	
+	document.getElementById("debug6").innerHTML="debug6::"+urlBg;
+	xhr.open("GET",urlBg,true);
+	xhr.send(null);
+	document.getElementById('debug').innerHTML = 'refresh done nb Mobiles: '+n_cars;
+ }
+ 
+ function removeMarkers() {
+ 	var n = markerMobilesArray.length;
+ 	for (i = 0; i < n; i++) {
+		var markerToRemove  = markerMobilesArray[i];
+		map.removeOverlay(markerToRemove);							
+	} 
+ }
+ 
+
+
+function getXmlHttpRequest(){
+                var xhr = null; 
+				if(window.XMLHttpRequest) // Firefox et autres
+				   xhr = new XMLHttpRequest(); 
+				else if(window.ActiveXObject){ // Internet Explorer 
+				   try {
+			                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+			            } catch (e) {
+			                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			            }
+				}
+				else { // XMLHttpRequest non supporté par le navigateur 
+				   alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
+				   xhr = false; 
+				} 
+                return xhr
+}
+	
+</script>
+
+
+</body>
+</html>
+
+<script language="JavaScript">
+<!--
+var SymRealOnLoad;
+var SymRealOnUnload;
+
+function SymOnUnload()
+{
+  window.open = SymWinOpen;
+  if(SymRealOnUnload != null)
+     SymRealOnUnload();
+}
+
+function SymOnLoad()
+{
+  if(SymRealOnLoad != null)
+     SymRealOnLoad();
+  window.open = SymRealWinOpen;
+  SymRealOnUnload = window.onunload;
+  window.onunload = SymOnUnload;
+}
+
+SymRealOnLoad = window.onload;
+window.onload = SymOnLoad;
+
+//-->
+</script>
+

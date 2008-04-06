@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>Bg Android</title>
+</head>
+<body>
+<h2>Hello Android!</h2>
+
+<ul>
+<li> <a href="http://carpool-android.blogspot.com/">carpool-android.blogspot.com</a> </li>
+<li> <a href="http://carpool-android-description.blogspot.com/">carpool-android-description.blogspot.com</a> </li>
+<li> <a href="http://carpool-android-help.blogspot.com/">carpool-android-help.blogspot.com</a> </li>
+</ul>
+
+
+<br/>
+<h2>Serveur Architecture </h2>
+I need to manage a lot of client (Cars and Pedestrian) And i have not so much CPU.
+<br/>
+So i choosed to be the lightest i could.
+<br/>I choose a tomcat server, directly in front of clients. No database. The data of clients are  keep the minimum of time. Android client  refresh its position every n minutes.So ,data are deleted after 3*n minutes of inactivity. It is not only useless to send inactive data to a client, but it is confusing.
+<br/>I tested i can have more than 10000 users in the same time. It is enough to start! 
+
+<h2> More fonctions </h2>
+I think it should be a good idea to have a notation of every users: The transaction are ok, nok. Latter may be
+<hr/>
+<a href="admin?action=welcome">welcome debug</a>
+<br/>
+<a href="http://bertrand.guiral.free.fr/android/carpool_set_my_position.html">set_my_position.html : </a>To set my position by the web
+<br/>
+<a href="http://bertrand.guiral.free.fr/android/carpool_show_mobiles.html">show_mobiles.html: </a>Show the mobile with googlemap
+<hr/>
+<a href="init">log</a>  of the application (For debugging only)
+</body>
+</html>

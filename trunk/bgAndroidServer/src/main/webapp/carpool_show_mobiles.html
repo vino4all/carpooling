@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Show all mobiles:</title>
+<style type="text/css">
+body{ font-family:Georgia Serif; font-size: small;
+background-color: #ffffff;  
+a:hover {color: red; text-decoration: underline; }
+</style>
+
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+var SymRealWinOpen = window.open;
+
+function SymWinOpen(url, name, attributes)
+{
+  return (new Object());
+}
+
+window.open = SymWinOpen;
+
+//-->
+</script>
+
+<script 
+
+src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAARZKvdESHxXe5dJNb-4NCYRQYFsV0N20g4TzRjTtKKqegDWiVTRQmCuOLDHf_VkLCdySMpiT6zg_cag"type="text/javascript">
+</script>
+</head>
+<body onunload="GUnload()"  style="border: solid 0px green ;">
+
+
+
+<div style="border: thin double 3px black;margin-left: auto; margin-right: auto; text-align: center; ">
+	<h2> 
+		<img src="images/auto_60.gif" alt="" style="vertical-align: middle"/> 
+		Car Pool: Show all mobiles
+		<img src="images/pingouin_h60.gif" alt="" alt="" style="vertical-align: middle"/> 
+	</h2>
+</div>
+<p/>
+
+<input type="hidden" id="urlServer" style="width:280px;" name="pos" value="http://dev.java-consultant.com/bgAndroid" />
+
+<br/>
+To see the postions of the mobiles, push the 'refresh' button.
+
+
+<br/>
+<radiogroup id="show">
+<table border="1">
+
+
+<tr> <td>       </td> <td><input type="radio" id="show0"  name="type" value="0" />show all</td> </tr>
+<tr> <td>       </td> <td><input type="radio" id="show1"  name="type" value="1" />show pedestrians only </td> </tr>
+<tr> <td>       </td> <td><input type="radio" id="show2"  name="type" value="2" />show cars only</td> </tr>
+                          
+                                                                                      
+</table>
+</radiogroup>
+
+<input type="submit" id="testBg1" style="width:280px;" name="tzstBg" value="refresh" onclick="getCars()" />
+<br/>
+
+
+<div id="map" style="width:512px; height:400px"></div>
+<br/>
+<div id="debug"> </div>
+<br/>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+var map = new GMap2(document.getElementById("map"));
+map.addControl(new GMapTypeControl(1));
+map.addControl(new GLargeMapControl());
+var myPosition = new GLatLng(45,2);
+map.setCenter(myPosition, 4);
+
+var blueIcon = new GIcon(G_DEFAULT_ICON);
+blueIcon.image = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png";
+var markerMobilesArray = new Array();
+getCars();
+
+function getCars() {
+ 	document.getElementById('debug').innerHTML = 'refresh start';
+ 	var xhr = getXmlHttpRequest();
+ 	var center = map.getCenter();
+ 	var latitudeMapCenter = (center.lat().toFixed(6)*1000000);
+ 	var longitudeMapCenter = (center.lng().toFixed(6)*1000000);
+ 	var n_cars=0;
+ 	
+ 	
+ 	 try {
+ 	    var bounds =  map.getBounds();
+ 	    var southWest = bounds.getSouthWest();  
+ 	    var northEast = bounds.getNorthEast();  
+ 	    var lngSpanE6 = ((northEast.lng().toFixed(6) - southWest.lng().toFixed(6))*1000000)|0; 
+ 	    var latSpanE6 = ((northEast.lat().toFixed(6) - southWest.lat().toFixed(6))*1000000)|0;
+ 	 }catch(e) { 	 	
+ 	    document.getElementById("debug").innerHTML="debug::"+e;
+ 	 }
+ 	
+	var urlBg = document.getElementById("urlServer").value+"/service?action=getCarsFromWeb&debug=js";
+	urlBg += "&latitudeMapCenter="+latitudeMapCenter+"&longitudeMapCenter="+longitudeMapCenter;
+	urlBg += "&latitudeSpan="+latSpanE6+"&longitudeSpan="+lngSpanE6;
+	if (document.getElementById("show0").checked){
+		urlBg+="&showOnly=0";
+	}
+	if (document.getElementById("show1").checked){
+		urlBg+="&showOnly=1";
+	}
+	if (document.getElementById("show2").checked){
+		urlBg+="&showOnly=2";
+	}
+		
+   
+	xhr.onreadystatechange = function(){	  
+					try {
+					  if(xhr.readyState == 4 && xhr.status == 200){	
+					   removeMarkers();
+					    var message_nodes_new = xhr.responseXML.getElementsByTagName("car");
+					    var markerMobilesArrayLocal = new Array();
+					    
+ 						 n_cars = message_nodes_new.length;
+ 						 var s=""; 						 
+ 						 for (i = 0; i < n_cars; i++) {
+ 						    var latitude = message_nodes_new[i].getAttribute("latitudeE6") /1000000;
+						    var longitude = message_nodes_new[i].getAttribute("longitudeE6") /1000000;
+						    var destination = message_nodes_new[i].getAttribute("destination");
+						    var prix = message_nodes_new[i].getAttribute("prix");
+						    var name = message_nodes_new[i].getAttribute("name");
+						    var xmppAdress= message_nodes_new[i].getAttribute("xmppAdress");
+						    s+="<br> car: "+i+"  name: "+name+"  destination "+destination+"  latitude:"+latitude+" longitude:"+longitude;
+						    var g = new GLatLng(latitude,longitude);
+						    var myHtml = i+"  prix:" +prix+ "destination " +destination;    
+						    var options = { title: myHtml};
+						    var marker2 = createMarker(g,i,name, prix, destination,xmppAdress)
+						    
+	
+						    markerMobilesArrayLocal[i]=marker2;
+							map.addOverlay(marker2);							
+						 } 
+						 markerMobilesArray=markerMobilesArrayLocal;
+						 document.getElementById('debug').innerHTML = 'debug6 refresh response nb Mobiles: '+n_cars+" ::"+ markerMobilesArray.length ;
+					  }
+					}catch(e){
+						document.getElementById("debug").innerHTML="debug7 ::: Exception "+e;
+					}
+					
+	};
+	try {
+		xhr.open("GET",urlBg,true);
+		xhr.send(null);
+		document.getElementById('debug').innerHTML = 'refresh done nb Mobiles: '+n_cars;
+	} catch(e) {
+		document.getElementById("debug").innerHTML="debug8 ::: Exception "+e;
+	}
+ }
+ 
+ function createMarker(point,i,name, prix, destination,address) {
+	var options = { title: ""+destination};
+ 	var marker = new GMarker(point,options);  
+ 	marker.value = ""+i;  
+ 	
+ 	GEvent.addListener(marker, "click", function() {    
+ 	    var googleTalk = '<a href="http://talkgadget.google.com/talkgadget/popout">'+address+' </a>';
+ 		var myHtml = "name:"+name+"<br/> price:" +prix+ "<br/>destination :" +destination+" <br/>"+googleTalk; ;    
+ 		map.openInfoWindowHtml(point, myHtml);  });  
+ 	return marker;
+ }
+ 
+ function removeMarkers() {
+ 	var n = markerMobilesArray.length;
+    for (i = 0; i < n; i++) {
+ 		var markerToRemove  = markerMobilesArray[i];
+		map.removeOverlay(markerToRemove);							
+	} 
+ }
+ 
+
+
+function getXmlHttpRequest(){
+                var xhr = null; 
+				if(window.XMLHttpRequest) // Firefox et autres
+				   xhr = new XMLHttpRequest(); 
+				else if(window.ActiveXObject){ // Internet Explorer 
+				   try {
+			                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+			            } catch (e) {
+			                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			            }
+				}
+				else { // XMLHttpRequest non supporté par le navigateur 
+				   alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
+				   xhr = false; 
+				} 
+                return xhr
+}
+	
+</script>
+
+
+</body>
+</html>
+
+<script language="JavaScript">
+<!--
+var SymRealOnLoad;
+var SymRealOnUnload;
+
+
+function SymOnUnload()
+{
+  window.open = SymWinOpen;
+  if(SymRealOnUnload != null)
+     SymRealOnUnload();
+}
+
+function SymOnLoad()
+{
+  if(SymRealOnLoad != null)
+     SymRealOnLoad();
+  window.open = SymRealWinOpen;
+  SymRealOnUnload = window.onunload;
+  window.onunload = SymOnUnload;
+}
+
+SymRealOnLoad = window.onload;
+window.onload = SymOnLoad;
+
+
+//-->
+</script>
+
