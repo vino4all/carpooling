@@ -1,0 +1,63 @@
+<project name="bgAndroidServer" default="makeWar">
+
+	<property name="targetdir" value="${basedir}/target" />
+	<property name="war" value="${targetdir}/bgAndroid.war" />
+	<taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" />
+	<taskdef name="list" classname="org.apache.catalina.ant.ListTask" />
+	<taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask" />
+	<taskdef name="remove" classname="org.apache.catalina.ant.RemoveTask" />
+
+	<!-- Configure the custom Ant tasks for the Manager application -->
+
+
+	<tstamp>
+		<format property="touch.time" pattern="yyyy_MM_dd_hh_mm" />
+	</tstamp>
+
+	<target name="update bgUtil" description="update bgUtil2">
+		<copy file="../bgUtil2/build/bgUtil2.jar" todir="src/main/webapp/WEB-INF/lib"/>
+	</target>
+
+		
+	<target name="makeWar" description="make war ${war}">
+		<delete dir="target" />
+		<mkdir dir="target" />
+		<mkdir dir="target/unzip" />
+
+		<war destfile="${war}">
+			<fileset dir="src/main/webapp" />
+		</war>
+
+		<unzip src="${war}" dest="target/unzip" />
+	</target>
+
+	
+	<target name="deployDedibox" description="Deploy dedibox http://dev.java-consultant.com/manager/html">
+		<echo message="${war}" />
+		<deploy url="http://dev.java-consultant.com/manager"
+			username="shubaka" password="shubaka" path="/bgAndroid" war="${war}"
+			update="true" />
+		<echo
+			message="${war} deployed  to dev.java-consultant.com  path:bgAndroid" />
+	</target>
+	
+	<target name="deployLocalHost" description="Deploy localhost http://localhost/manager/html">
+		<echo message="${war}" />
+		<deploy url="http://localhost/manager"
+			username="shubaka" password="shubaka" path="/bgAndroid" war="${war}"
+			update="true" />
+		<echo
+			message="${war} deployed  to localhost path:bgAndroid" />
+	</target>
+	<target name="UndeployLocalHost" description="Deploy localhost http://localhost/manager/html">
+		<echo message="undeploy LocalHost" />
+		<remove url="http://localhost/manager"
+			username="shubaka" password="shubaka" path="/bgAndroid"  />
+		<echo
+			message="undeployed  to localhost path:bgAndroid" />
+	</target>
+
+
+	
+
+</project>
