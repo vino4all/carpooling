@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Map Simulator </title>
+<style type="text/css">
+
+
+body{ font-family:Georgia Serif; font-size: small;
+background-color: #ffffff;  
+a:hover {color: red; text-decoration: underline; }
+
+
+</style>
+
+<script language="JavaScript">
+<!--
+
+function SymError()
+{
+  return true;
+}
+
+window.onerror = SymError;
+
+var SymRealWinOpen = window.open;
+
+function SymWinOpen(url, name, attributes)
+{
+  return (new Object());
+}
+
+window.open = SymWinOpen;
+
+//-->
+</script>
+
+<script 
+
+src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAARZKvdESHxXe5dJNb-4NCYRQYFsV0N20g4TzRjTtKKqegDWiVTRQmCuOLDHf_VkLCdySMpiT6zg_cag" type="text/javascript">
+</script>
+</head>
+<body onunload="GUnload()"  style="border: solid 10px green ;">
+<div style="border: thin double 3px black;margin-left: auto; margin-right: auto; text-align: center; ">
+	<h2> 
+		<img src="images/auto_60.gif" alt="" style="vertical-align: middle"/> 
+		Car Pool: Traffic Simulator
+		<img src="images/pingouin_h60.gif" alt="" alt="" style="vertical-align: middle"/> 
+	</h2>
+</div>
+<p/>
+<div id="forehead" style="width: 550px; height: 40px">
+
+
+This tool is done to simulate a lot of car loking for people, or a people loking for a car.
+<br/> 
+Just click on the map! 
+<br/>
+Every click create a new mobile, at the position of the click.
+</div>
+
+<div id="novel" style=" text-align:left">
+
+
+<h3> Position clicked </h3>
+
+<div id="debug"> -</div>
+
+<input type="text" id="urlServer" style="width:280px;" name="pos" value="http://dev.java-consultant.com/bgAndroid" />
+<br/>
+<input type="text" id="click" style="width:280px;" name="pos" value="aaaa"/>
+<br/>
+<input type="submit" id="testBg1" style="width:280px;" name="tzstBg" value="reInit" onclick="reInit()" />
+<br/>
+<table>
+
+<tr> <td>name: </td> <td> <input type="text" id="name" style="width:280px;" name="name" value="bertrand"/></td> </tr>
+<tr> <td>telephone: </td> <td> <input type="text" id="telephone" style="width:280px;" name="telephone" value="0682426361"/></td> </tr>
+<tr> <td>xmppAdress: </td> <td> <input type="text" id="xmppAdress" style="width:280px;" name="xmppAdress" value="bertrand.guiral@gmail.com"/></td> </tr>
+<tr> <td> price:</td> <td> <input type="text" id="prix" style="width:280px;" name="prix" value="100 Euros"/> </td> </tr>
+<tr> <td> destination: </td> <td> <input type="text" id="destination" style="width:280px;" name="destination" value="Monbassa"/></td> </tr>
+<tr> <td> type: </td> <td><radiogroup id="type">
+						  <input type="radio" id="type0"  name="type" value="0" />unknown
+                          <br/><input type="radio" id="type1"  name="type" value="1" />People
+                          <br/><input type="radio" id="type2"  name="type" value="2" />Car
+                          </radiogroup id="group1">
+                                                                                        </td> </tr>
+</table>
+
+
+
+
+<br/>
+
+
+
+
+
+<div id="map" style="width:512px; height:400px"></div>
+<br/><br/>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+
+/// Code by Esa
+/// Feb 2006
+// minor update oct 2007
+      
+var map = new GMap2(document.getElementById("map"));
+map.addControl(new GMapTypeControl(1));
+map.addControl(new GLargeMapControl());
+map.setCenter(new GLatLng(65,25), 4);
+
+/////Marker and info window
+
+var htmlText = "<div style='width: 208px; height: 100px'>You can see that 'mousemove' event returns mouse coordinates even on marker or infowindow."
+
+var marker = new GMarker(new GLatLng(60,25));
+
+map.addOverlay(marker);
+GEvent.addListener(marker, "click", function() {
+marker.openInfoWindowHtml(htmlText);});
+
+
+function testAddMarkerBg() {
+		document.getElementById('click').value='pouet3Successfulll!! ';
+		var marker2 = new GMarker(new GLatLng(61,26));
+		map.addOverlay(marker2);
+}
+/////////Mousemove
+
+var lastPoint;
+
+GEvent.addListener(map, "mousemove", function(point){
+lastPoint = point;
+});
+
+////click latch // added 2007
+
+GEvent.addListener(map, "click", function(){
+var latLngStr6 = lastPoint.lat().toFixed(6) + ', ' + lastPoint.lng().toFixed(6);
+document.getElementById("click").value = latLngStr6;
+var markerClick = new GMarker(lastPoint);
+map.addOverlay(markerClick);
+setMobile(lastPoint);
+});
+
+function reInit() {
+	document.getElementById('debug').innerHTML = '...';
+}
+
+function setMobile(point) {
+	var xhr = getXmlHttpRequest();
+	var urlBg = document.getElementById("urlServer").value+"/service?action=setPositionSimu&debug=js&latitudeE6="+(lastPoint.lat().toFixed(6)*1000000)+"&longitudeE6="+(lastPoint.lng().toFixed(6)*1000000);
+	urlBg += "&name="+document.getElementById("name").value;
+	urlBg += "&telephone="+document.getElementById("telephone").value;
+	urlBg += "&xmppAdress="+document.getElementById("xmppAdress").value;
+	urlBg += "&destination="+document.getElementById("destination").value;
+	urlBg += "&prix="+document.getElementById("prix").value;
+	
+	if (document.getElementById("type0").checked){
+		urlBg+="&type=0";
+	}
+	if (document.getElementById("type1").checked){
+		urlBg+="&type=1";
+	}
+	if (document.getElementById("type2").checked){
+		urlBg+="&type=2";
+	}
+	try {
+		document.getElementById("debug").innerHTML = urlBg;
+		xhr.onreadystatechange = function(){
+						// On ne fait quelque chose que si on a tout reçu et que le serveur est ok
+						document.getElementById("debug").innerHTML = "testBg4 AAAAAAAAA  "+xhr.readyState+" "+xhr.status ;
+						if(xhr.readyState == 4 && xhr.status == 200){
+							//alert(xhr.responseText);
+							document.getElementById("debug").innerHTML = xhr.responseText;
+						}
+		};
+		xhr.open("GET",urlBg,true);
+		xhr.send(null);
+		document.getElementById("debug").innerHTML = "request done";
+	} catch(e){
+		document.getElementById("debug").innerHTML = "Exception "+e;	
+	}
+}
+
+
+
+function getXmlHttpRequest(){
+                var xhr = null; 
+				if(window.XMLHttpRequest) // Firefox et autres
+				   xhr = new XMLHttpRequest(); 
+				else if(window.ActiveXObject){ // Internet Explorer 
+				   try {
+			                xhr = new ActiveXObject("Msxml2.XMLHTTP");
+			            } catch (e) {
+			                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			            }
+				}
+				else { // XMLHttpRequest non supporté par le navigateur 
+				   alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
+				   xhr = false; 
+				} 
+                return xhr
+}
+	
+</script>
+
+
+</body>
+</html>
+
+<script language="JavaScript">
+<!--
+var SymRealOnLoad;
+var SymRealOnUnload;
+
+function SymOnUnload()
+{
+  window.open = SymWinOpen;
+  if(SymRealOnUnload != null)
+     SymRealOnUnload();
+}
+
+function SymOnLoad()
+{
+  if(SymRealOnLoad != null)
+     SymRealOnLoad();
+  window.open = SymRealWinOpen;
+  SymRealOnUnload = window.onunload;
+  window.onunload = SymOnUnload;
+}
+
+SymRealOnLoad = window.onload;
+window.onload = SymOnLoad;
+
+//-->
+</script>
+

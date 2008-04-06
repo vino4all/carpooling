@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<androidConfig>
+	<!--       xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	
+	
+	
+	<clientSmtp  class="com.bg.util.email.smtp.ClientSmtp" name="server3">
+		<param name="debug" value="true"/>
+		<param name="starttls" value="true"/>
+		<param name="host" value="smtp.gmail.com"/>
+		<param name="from" value="bertrand.guiral@gmail.com"/>
+		<param name="user" value="bertrand.guiral@gmail.com"/>
+		<param name="password" value="shubaka"/>	
+		<param name="sendMessageOnActivation" value="true"/>	
+		<param name="destinaireActivationMessage" value="bertrand.guiral@free.fr"/>	
+		<param name="textActivationMessage" value="test activation message "/>
+		<param name="subjectActivationMessage" value="CLIENT SMTP Android !!dedibox!! "/>
+	</clientSmtp>
+	
+	
+	<mf class="bg.android.positions.MobilesFactories" name="">	           
+		<param name="debug" value="true"/>
+	</mf>
+	
+
+	<simu class="bg.android.positions.SimuMobiles" name="">	           
+	</simu>
+	
+	
+	
+</androidConfig>
