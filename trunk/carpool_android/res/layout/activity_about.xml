@@ -9,7 +9,7 @@
     <ImageView android:id="@+id/pingoins" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:src="@drawable/pingoins"/>
   </LinearLayout>
   
-	 <TextView android:textColor="@drawable/red_bg_text" android:textAlign="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="v b0.0.0" />
+	 <TextView android:textColor="@drawable/red_bg_text" android:textAlign="center" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="v b6" />
  	 <TextView android:textColor="@drawable/red_bg_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/about_text_1" />
  	 
  	 <TextView android:textColor="@drawable/red_bg_text"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/about_text_2" />
