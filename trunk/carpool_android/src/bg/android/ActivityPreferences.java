@@ -214,7 +214,7 @@ public class ActivityPreferences extends Activity implements RadioGroup.OnChecke
 		int idChecked_hidden = this.radioGroup_hidden.getCheckedRadioButtonId();
 		if (idChecked_hidden == R.id.radio_group_2_hidden) {
 			Preferences.getInstance().setHidden(this, true);
-		} else if (idChecked_hidden == R.id.radio_group_2_hidden) {
+		} else if (idChecked_hidden == R.id.radio_group_2_hidden_false) {
 			Preferences.getInstance().setHidden(this, false);
 		}
 
